@@ -1,11 +1,10 @@
-*.class
+/.idea/
 
 # Package Files #
-*.jar
-*.war
+/*.jar
+/*.war
 
 # gwt caches and compiled units #
-war/gwt_bree/
 gwt-unitCache/
 
 # boilerplate generated classes #
@@ -14,15 +13,29 @@ gwt-unitCache/
 # more caches and things from deploy #
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
+war/gatekeeper/
 
 #compilation logs
 .gwt/
-
-#caching for already compiled files
-gwt-unitCache/
 
 #gwt junit compilation files
 www-test/
 
 #old GWT (1.5) created this dir
 .gwt-tmp/
+
+# Local configuration files
+build-dev.properties
+/germinate-gatekeeper.iml
+
+# Files that are created during the compilation process
+/war/WEB-INF/lib-temp/
+
+# LaTeX files to exclude
+changelog/*/*.aux
+changelog/*/*.log
+changelog/*/*.bbl
+changelog/*/*.blg
+changelog/*/*.out
+changelog/*/*.toc
+changelog/*/*.synctex.gz

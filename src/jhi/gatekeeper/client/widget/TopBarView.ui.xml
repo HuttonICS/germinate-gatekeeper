@@ -1,0 +1,66 @@
+<!--~
+  ~  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
+  ~  Information and Computational Sciences Group at The James Hutton Institute, Dundee
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+
+	<ui:import field="org.gwtbootstrap3.client.ui.constants.Styles.*"/>
+	<ui:import field="jhi.gatekeeper.client.util.Classes.*"/>
+	<ui:import field="jhi.gatekeeper.shared.Page.*"/>
+	<ui:with field="msg" type="jhi.gatekeeper.client.i18n.I18n"/>
+
+	<ui:style>
+		.languageSelector a {
+			cursor: pointer;
+		}
+	</ui:style>
+
+	<ul class="{NAV} {NAVBAR_NAV} {NAVBAR_RIGHT} {style.languageSelector}">
+		<li class="{DROPDOWN}" ui:field="languageDropdown">
+			<a aria-expanded="false" aria-haspopup="true" class="{DROPDOWN_TOGGLE}" data-toggle="dropdown" href="#" role="button">
+				<i class="{FA} {FA_FW} {FA_LANGUAGE}"/>
+				<ui:text from="{msg.menuTopLanguage}"/>
+				<span class="caret"/>
+			</a>
+			<ul class="{DROPDOWN_MENU}" ui:field="languageList" />
+		</li>
+
+		<li>
+			<a ui:field="aboutAnchor">
+				<i class="{FA} {FA_FW} {FA_INFO}"/>
+				<ui:text from="{msg.menuTopAbout}"/>
+			</a>
+		</li>
+		<li>
+			<a ui:field="lostPasswordAnchor">
+				<i class="{FA} {FA_FW} {FA_KEY}"/>
+				<ui:text from="{msg.menuTopForgottenPassword}"/>
+			</a>
+		</li>
+		<li>
+			<a ui:field="loginAnchor">
+				<i class="{FA} {FA_FW} {FA_SIGN_IN}"/>
+				<ui:text from="{msg.menuTopLogin}"/>
+			</a>
+		</li>
+		<li>
+			<a ui:field="logoutAnchor">
+				<i class="{FA} {FA_FW} {FA_SIGN_OUT}"/>
+				<ui:text from="{msg.menuTopLogout}"/>
+			</a>
+		</li>
+	</ul>
+</ui:UiBinder>

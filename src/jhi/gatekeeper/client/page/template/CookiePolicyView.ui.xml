@@ -1,0 +1,45 @@
+<!--~
+  ~  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
+  ~  Information and Computational Sciences Group at The James Hutton Institute, Dundee
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+
+	<ui:import field="jhi.gatekeeper.client.util.Classes.*"/>
+	<ui:import field="org.gwtbootstrap3.client.ui.constants.Styles.*"/>
+	<ui:import field="com.google.gwt.user.client.ui.FormPanel.*"/>
+	<ui:with field="msg" type="jhi.gatekeeper.client.i18n.I18n"/>
+
+	<div class="{MODAL_DIALOG}" role="document">
+		<div class="{MODAL_CONTENT}">
+			<div class="{MODAL_HEADER}">
+				<button aria-label="{msg.genericButtonClose}" class="{CLOSE}" data-dismiss="{MODAL}" type="button">
+					<span aria-hidden="true">&#x00D7;</span>
+				</button>
+				<h4 class="{MODAL_TITLE}">
+					<ui:text from="{msg.cookiePolicyTitle}"/>
+				</h4>
+			</div>
+			<div class="{MODAL_BODY}">
+				<ui:safehtml from="{msg.cookiePolicyText}"/>
+			</div>
+			<div class="{MODAL_FOOTER}">
+				<button class="{BTN} btn-default" data-dismiss="{MODAL}" type="button">
+					<ui:text from="{msg.genericButtonClose}"/>
+				</button>
+			</div>
+		</div>
+	</div>
+</ui:UiBinder>
