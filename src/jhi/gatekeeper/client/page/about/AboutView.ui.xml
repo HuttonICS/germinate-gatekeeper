@@ -1,4 +1,4 @@
-<!--~
+<!--
   ~  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
   ~  Information and Computational Sciences Group at The James Hutton Institute, Dundee
   ~
@@ -23,7 +23,7 @@
 	<ui:with field="msg" type="jhi.gatekeeper.client.i18n.I18n"/>
 
 	<b:Panel>
-		<g:Label styleName="{PANEL_HEADING}" text="{msg.aboutHeading}"/>
+		<b:PanelHeader text="{msg.aboutHeading}"/>
 		<g:FlowPanel styleName="{PANEL_BODY}">
 			<g:HTML ui:field="message"/>
 		</g:FlowPanel>

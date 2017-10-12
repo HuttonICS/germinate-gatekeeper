@@ -1,4 +1,4 @@
-<!--~
+<!--
   ~  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
   ~  Information and Computational Sciences Group at The James Hutton Institute, Dundee
   ~
@@ -24,7 +24,7 @@
 
 	<g:HTMLPanel>
 		<b:Panel>
-			<g:Label styleName="{PANEL_HEADING}" text="{msg.viewUserPermissionsHeading}"/>
+			<b:PanelHeader text="{msg.viewUserPermissionsHeading}"/>
 			<g:FlowPanel ui:field="table"/>
 		</b:Panel>
 	</g:HTMLPanel>

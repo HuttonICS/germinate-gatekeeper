@@ -33,20 +33,20 @@ import jhi.gatekeeper.shared.bean.*;
 /**
  * @author Sebastian Raubach
  */
-public class DatabaseSystemListBox extends GatekeeperListBox<DatabaseSystem>
+public class UserListBox extends GatekeeperListBox<User>
 {
-	public DatabaseSystemListBox()
+	public UserListBox()
 	{
-		super(new Renderer<DatabaseSystem>()
+		super(new Renderer<User>()
 		{
 			@Override
-			public String render(DatabaseSystem object)
+			public String render(User object)
 			{
-				return object.getServerName() + " - " + object.getSystemName();
+				return object.getUsername();
 			}
 
 			@Override
-			public void render(DatabaseSystem object, Appendable appendable) throws IOException
+			public void render(User object, Appendable appendable) throws IOException
 			{
 				appendable.append(render(object));
 			}
@@ -55,10 +55,10 @@ public class DatabaseSystemListBox extends GatekeeperListBox<DatabaseSystem>
 
 	public void update()
 	{
-		DatabaseSystemService.Instance.getInstance().getDatabaseSystemList(Cookie.getRequestProperties(), Pagination.DEFAULT, new AsyncCallbackLogoutOnFailure<PaginatedResult<List<DatabaseSystem>>>()
+		UserService.Instance.getInstance().getUserList(Cookie.getRequestProperties(), null, Pagination.DEFAULT, new AsyncCallbackLogoutOnFailure<PaginatedResult<List<User>>>()
 		{
 			@Override
-			protected void onSuccessImpl(PaginatedResult<List<DatabaseSystem>> result)
+			protected void onSuccessImpl(PaginatedResult<List<User>> result)
 			{
 				if (CollectionUtils.isEmpty())
 				{
@@ -66,8 +66,8 @@ public class DatabaseSystemListBox extends GatekeeperListBox<DatabaseSystem>
 				}
 				else
 				{
-					DatabaseSystemListBox.this.setValue(result.getResult().get(0));
-					DatabaseSystemListBox.this.setAcceptableValues(result.getResult());
+					UserListBox.this.setValue(result.getResult().get(0));
+					UserListBox.this.setAcceptableValues(result.getResult());
 				}
 			}
 		});

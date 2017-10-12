@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -24,7 +24,6 @@ package jhi.gatekeeper.shared;
  */
 public enum Parameter
 {
-	isAdmin(Boolean.class, true, true),
 	databaseSystemId(Long.class, true, true);
 
 	private Class<?> type;

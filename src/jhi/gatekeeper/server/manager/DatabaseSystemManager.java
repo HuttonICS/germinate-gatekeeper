@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -35,7 +35,7 @@ public class DatabaseSystemManager extends AbstractManager
 	private static final String QUERY_BY_ID = "SELECT * FROM database_systems WHERE id = ?";
 	private static final String QUERY_COUNT = "SELECT COUNT(1) AS count FROM database_systems";
 
-	private static final String INSERT_WHERE_NOT_EXISTS = "INSERT INTO database_systems (system_name, server_name, description) SELECT %s, %s, %s FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM database_systems WHERE system_name = ? AND server_name = ?)";
+	private static final String INSERT_WHERE_NOT_EXISTS = "INSERT INTO database_systems (system_name, server_name, description) VALUES(?, ?, ?)";
 
 	private static final String DELETE = "DELETE FROM database_systems WHERE id = ?";
 
@@ -92,14 +92,6 @@ public class DatabaseSystemManager extends AbstractManager
 				.getObjectsPaginated(DatabaseSystem.Parser.Instance.getInstance(), false);
 	}
 
-	private static String getQuoted(String input)
-	{
-		if (StringUtils.isEmpty(input))
-			return "NULL";
-		else
-			return "\"" + input + "\"";
-	}
-
 	/**
 	 * Ensures the given {@link DatabaseSystem} exists.
 	 *
@@ -110,11 +102,10 @@ public class DatabaseSystemManager extends AbstractManager
 	{
 		if(!DatabaseObject.hasId(databaseSystem))
 		{
-			String formatted = String.format(INSERT_WHERE_NOT_EXISTS, getQuoted(databaseSystem.getSystemName()), getQuoted(databaseSystem.getServerName()), getQuoted(databaseSystem.getDescription()));
-
-			ValueQuery query = new ValueQuery(formatted)
+			ValueQuery query = new ValueQuery(INSERT_WHERE_NOT_EXISTS)
 					.setString(databaseSystem.getSystemName())
-					.setString(databaseSystem.getServerName());
+					.setString(databaseSystem.getServerName())
+					.setString(databaseSystem.getDescription());
 
 			List<Long> generatedKeys = query.execute();
 

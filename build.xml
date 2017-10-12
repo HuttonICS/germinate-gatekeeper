@@ -1,4 +1,4 @@
-<!--~
+<!--
   ~  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
   ~  Information and Computational Sciences Group at The James Hutton Institute, Dundee
   ~
@@ -67,6 +67,10 @@
 			<!-- Include the js and css folders -->
 			<fileset dir="war" includes="css/**"/>
 			<fileset dir="war" includes="js/**"/>
+
+			<!-- Include the license -->
+			<fileset dir="." includes="LICENSE" />
+
 			<!-- Copy the properties file to a location accessible from the source -->
 			<zipfileset dir="." includes="config.properties" prefix="WEB-INF/classes"/>
 			<zipfileset dir="." includes="logging.properties" prefix="WEB-INF/classes"/>

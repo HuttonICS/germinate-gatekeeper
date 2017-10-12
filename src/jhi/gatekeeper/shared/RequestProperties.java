@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -42,6 +42,13 @@ public class RequestProperties implements Serializable
 	public RequestProperties()
 	{
 
+	}
+
+	public RequestProperties(String sessionId, Long userId, String locale)
+	{
+		this.sessionId = sessionId;
+		this.userId = userId != null ? Long.toString(userId) : null;
+		this.locale = locale;
 	}
 
 	public RequestProperties(String sessionId, String userId, String locale)

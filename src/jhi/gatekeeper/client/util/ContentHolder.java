@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -27,6 +27,7 @@ import org.gwtbootstrap3.client.ui.constants.*;
 
 import java.util.*;
 
+import jhi.gatekeeper.client.*;
 import jhi.gatekeeper.client.i18n.*;
 import jhi.gatekeeper.client.page.*;
 import jhi.gatekeeper.client.page.account.*;
@@ -81,25 +82,24 @@ public class ContentHolder
 		if (!CollectionUtils.isEmpty(availablePages))
 			return;
 
-		Boolean isAdmin = (Boolean) ParameterStore.get(Parameter.isAdmin, true);
 
-		if (isAdmin != null)
+		UserAuthentication auth = Gatekeeper.getUserAuthentication();
+		boolean isAdmin = auth != null && auth.isAdmin();
+
+		if (isAdmin)
 		{
-			if (isAdmin)
-			{
-				availablePages.addAll(Arrays.asList(Page.values()));
-			}
-			else
-			{
-				availablePages.add(Page.login);
-				availablePages.add(Page.accountSettings);
-				availablePages.add(Page.logout);
-				availablePages.add(Page.lostPassword);
-				availablePages.add(Page.createAdmin);
-			}
-
-			NavigationBar.init();
+			availablePages.addAll(Arrays.asList(Page.values()));
 		}
+		else
+		{
+			availablePages.add(Page.login);
+			availablePages.add(Page.accountSettings);
+			availablePages.add(Page.logout);
+			availablePages.add(Page.lostPassword);
+			availablePages.add(Page.createAdmin);
+		}
+
+		NavigationBar.init();
 	}
 
 	/**

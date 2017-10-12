@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -97,13 +97,11 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 			result = oldAuth;
 		}
 
-        /* Extend the session */
-		this.getThreadLocalRequest().getSession().setAttribute(Session.SID, properties.getSessionId());
-		this.getThreadLocalRequest().getSession().setMaxInactiveInterval(SESSION_LIFETIME_MIN * 60);
-
 		result.setSessionId(properties.getSessionId());
 
 		getThreadLocalRequest().getSession().setAttribute(Session.USER, result);
+		/* Extend the session */
+		this.getThreadLocalRequest().getSession().setMaxInactiveInterval(SESSION_LIFETIME_MIN * 60);
 
 		Session.storeSession(result, getThreadLocalRequest().getSession());
 

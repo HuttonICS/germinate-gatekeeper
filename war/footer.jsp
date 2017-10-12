@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
 
-<%--~
+<%--
   ~  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
   ~  Information and Computational Sciences Group at The James Hutton Institute, Dundee
   ~

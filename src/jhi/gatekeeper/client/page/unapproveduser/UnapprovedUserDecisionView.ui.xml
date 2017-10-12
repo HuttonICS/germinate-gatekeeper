@@ -1,4 +1,4 @@
-<!--~
+<!--
   ~  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
   ~  Information and Computational Sciences Group at The James Hutton Institute, Dundee
   ~
@@ -19,7 +19,7 @@
 			 xmlns:g='urn:import:com.google.gwt.user.client.ui'
 			 xmlns:ui='urn:ui:com.google.gwt.uibinder'>
 
-	<ui:import field="org.gwtbootstrap3.client.ui.constants.Styles.*"/>
+	<ui:import field="org.gwtbootstrap3.client.ui.constants.Alignment.*"/>
 	<ui:with field="msg" type="jhi.gatekeeper.client.i18n.I18n"/>
 
 	<ui:style>
@@ -27,18 +27,20 @@
 			margin-right: 4px;
 		}
 
-		.button-panel button:first-child {
+		.button-panel button:last-child {
 			margin-right: 0;
 		}
 	</ui:style>
 
 	<b:Panel>
-		<g:Label styleName="{PANEL_HEADING}" text="{msg.approveUserDecisionHeading}"/>
-		<g:Label styleName="{PANEL_BODY}" text="{msg.approveUserDecisionText}"/>
-		<g:FlowPanel styleName="{PANEL_FOOTER} {CLEARFIX} {style.button-panel}" ui:field="footer">
-			<b:Button addStyleNames="{PULL_RIGHT}" text="{msg.genericButtonApprove}" type="PRIMARY" ui:field="approve"/>
-			<b:Button addStyleNames="{PULL_RIGHT}" text="{msg.genericButtonReject}" ui:field="reject"/>
-			<b:Button addStyleNames="{PULL_RIGHT}" text="{msg.genericButtonDelete}" ui:field="delete"/>
-		</g:FlowPanel>
+		<b:PanelHeader text="{msg.approveUserDecisionHeading}"/>
+		<b:PanelBody>
+			<g:Label text="{msg.approveUserDecisionText}"/>
+		</b:PanelBody>
+		<b:PanelFooter addStyleNames="{style.button-panel} text-right">
+			<b:Button text="{msg.genericButtonDelete}" ui:field="delete"/>
+			<b:Button text="{msg.genericButtonReject}" ui:field="reject"/>
+			<b:Button text="{msg.genericButtonApprove}" type="PRIMARY" ui:field="approve"/>
+		</b:PanelFooter>
 	</b:Panel>
 </ui:UiBinder>

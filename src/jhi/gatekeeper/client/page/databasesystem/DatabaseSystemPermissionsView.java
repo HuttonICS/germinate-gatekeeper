@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -18,14 +18,18 @@
 package jhi.gatekeeper.client.page.databasesystem;
 
 import com.google.gwt.core.client.*;
+import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.*;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
 
+import jhi.gatekeeper.client.service.*;
 import jhi.gatekeeper.client.util.*;
+import jhi.gatekeeper.client.util.callback.*;
 import jhi.gatekeeper.client.util.event.*;
 import jhi.gatekeeper.client.widget.pagination.*;
 import jhi.gatekeeper.shared.*;
+import jhi.gatekeeper.shared.bean.*;
 
 /**
  * @author Sebastian Raubach
@@ -35,7 +39,12 @@ public class DatabaseSystemPermissionsView extends Composite
 	private static UserPermissionsViewUiBinder ourUiBinder = GWT.create(UserPermissionsViewUiBinder.class);
 	private final HandlerRegistration handlerRegistration;
 	@UiField
-	FlowPanel table;
+	FlowPanel            tablePanel;
+	@UiField
+	DatabaseSystemAddNew newUser;
+
+	private DatabasePermissionsTable table;
+	private Long                     id;
 
 	public DatabaseSystemPermissionsView()
 	{
@@ -48,27 +57,49 @@ public class DatabaseSystemPermissionsView extends Composite
 
 	private void update()
 	{
-		Long id = (Long) ParameterStore.get(Parameter.databaseSystemId);
+		id = (Long) ParameterStore.get(Parameter.databaseSystemId);
 
-		table.clear();
+		tablePanel.clear();
 
 		if (id != null)
 		{
-			table.add(new DatabasePermissionsTable(id, DatabasePermissionsTable.Type.DATABASE_SYSTEM));
+			table = new DatabasePermissionsTable(id, DatabasePermissionsTable.Type.DATABASE_SYSTEM);
+			tablePanel.add(table);
+		}
+		else
+		{
+			newUser.removeFromParent();
 		}
 	}
 
 	@Override
 	protected void onUnload()
 	{
-		if(handlerRegistration != null)
+		if (handlerRegistration != null)
 			handlerRegistration.removeHandler();
 
 		super.onUnload();
 	}
 
+	@UiHandler("button")
+	void onButtonPressed(ClickEvent e)
+	{
+		DatabasePermission permission = new DatabasePermission()
+				.setUser(newUser.getUser())
+				.setDatabaseSystem(new DatabaseSystem(id))
+				.setUserType(newUser.getUserType());
+
+		DatabasePermissionService.Instance.getInstance().grantPermissionForUser(Cookie.getRequestProperties(), permission, new AsyncCallbackLogoutOnFailure<Void>()
+		{
+			@Override
+			protected void onSuccessImpl(Void result)
+			{
+				table.update();
+			}
+		});
+	}
+
 	interface UserPermissionsViewUiBinder extends UiBinder<HTMLPanel, DatabaseSystemPermissionsView>
 	{
-
 	}
 }

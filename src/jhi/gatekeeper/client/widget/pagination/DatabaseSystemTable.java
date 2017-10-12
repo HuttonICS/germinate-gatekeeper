@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -69,15 +69,6 @@ public class DatabaseSystemTable extends AbstractPaginatedCellTable<DatabaseSyst
 				return AbstractListCell.USER_TEMPLATES.anchor(uri, object.getSystemName());
 			}
 		}, I18n.LANG.tableHeaderDatabasePermissionsSystemName());
-
-//		addColumn(new TextColumn<DatabaseSystem>()
-//		{
-//			@Override
-//			public String getValue(DatabaseSystem object)
-//			{
-//				return object.getSystemName();
-//			}
-//		}, I18n.LANG.tableHeaderDatabasePermissionsSystemName());
 
 		/* Add the database server column */
 		addColumn(new TextColumn<DatabaseSystem>()

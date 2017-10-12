@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -91,7 +91,8 @@ public class Session
          */
 		if (httpRequest != null)
 		{
-			sessionSessionId = (String) httpRequest.getSession().getAttribute(SID);
+			UserAuthentication auth = (UserAuthentication) httpRequest.getSession().getAttribute(Session.USER);
+			sessionSessionId = auth != null ? auth.getSessionId() : null;
 
 			if (httpRequest.getCookies() != null)
 			{
@@ -150,7 +151,6 @@ public class Session
 	 * @param password The password
 	 * @return The universally unique id
 	 * @throws InvalidCredentialsException      Thrown if the username/password combination is not valid
-	 * @throws SuspendedUserException           Thrown if the user has been suspended and cannot access this database anymore
 	 * @throws InsufficientPermissionsException Thrown if the user is not associated with this database at all
 	 * @throws DatabaseException                Thrown if the query fails on the server
 	 */

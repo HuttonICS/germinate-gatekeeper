@@ -1,4 +1,4 @@
-<!--~
+<!--
   ~  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
   ~  Information and Computational Sciences Group at The James Hutton Institute, Dundee
   ~
@@ -23,8 +23,8 @@
 	<ui:with field="msg" type="jhi.gatekeeper.client.i18n.I18n"/>
 
 	<b:Panel>
-		<g:Label styleName="{PANEL_HEADING}" text="{msg.viewUserDetailsHeading}"/>
-		<g:FlowPanel styleName="{PANEL_BODY}">
+		<b:PanelHeader text="{msg.viewUserDetailsHeading}"/>
+		<b:PanelBody>
 			<g:Label text="{msg.viewUserDetailsPlaceholder}" ui:field="message"/>
 			<b:Description horizontal="true" visible="false" ui:field="description">
 				<b:DescriptionTitle text="{msg.viewUserDetailsTitleUsername}"/>
@@ -40,6 +40,6 @@
 				<b:DescriptionTitle text="{msg.viewUserDetailsTitleRequestsAccessTo}"/>
 				<b:DescriptionData ui:field="requestsAccessToData"/>
 			</b:Description>
-		</g:FlowPanel>
+		</b:PanelBody>
 	</b:Panel>
 </ui:UiBinder>

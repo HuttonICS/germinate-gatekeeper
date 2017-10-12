@@ -1,4 +1,4 @@
-<!--~
+<!--
   ~  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
   ~  Information and Computational Sciences Group at The James Hutton Institute, Dundee
   ~
@@ -19,14 +19,12 @@
 			 xmlns:g='urn:import:com.google.gwt.user.client.ui'
 			 xmlns:ui='urn:ui:com.google.gwt.uibinder'>
 
-	<ui:import field="org.gwtbootstrap3.client.ui.constants.Styles.*"/>
-	<ui:import field="jhi.gatekeeper.client.util.Classes.*"/>
 	<ui:with field="msg" type="jhi.gatekeeper.client.i18n.I18n"/>
 
 	<b:Panel>
-		<g:Label styleName="{PANEL_HEADING}" text="{msg.activateUserHeading}"/>
-		<g:FlowPanel styleName="{PANEL_BODY}" ui:field="content">
+		<b:PanelHeader text="{msg.activateUserHeading}"/>
+		<b:PanelBody>
 			<g:Label text="{msg.activateUserProcessing}" ui:field="label"/>
-		</g:FlowPanel>
+		</b:PanelBody>
 	</b:Panel>
 </ui:UiBinder>

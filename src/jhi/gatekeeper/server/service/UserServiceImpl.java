@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -103,6 +103,7 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 		checkSessionAndPermissions(properties);
 
 		UserManager.add(user, credentials);
+		UserManager.setGatekeeperPermission(user, UserType.REGULAR_USER);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -23,6 +23,7 @@ import com.google.gwt.user.datepicker.client.*;
 
 import java.util.*;
 
+import jhi.gatekeeper.client.*;
 import jhi.gatekeeper.client.util.event.*;
 import jhi.gatekeeper.shared.*;
 import jhi.gatekeeper.shared.exception.*;
@@ -35,14 +36,12 @@ import jhi.gatekeeper.shared.exception.*;
  */
 public class Cookie
 {
-	public static final String SID     = "sid";
-	public static final String USER_ID = "user-id";
+	public static final String SID = "sid";
 
 	private static Long lifespan = null;
 
 	private static String path;
 	private static String sessionId;
-	private static String userId;
 
 	/**
 	 * Removes all cookies
@@ -51,8 +50,6 @@ public class Cookie
 	{
 		Cookies.removeCookie(SID, path);
 		sessionId = null;
-		Cookies.removeCookie(USER_ID, path);
-		userId = null;
 	}
 
 	/**
@@ -76,28 +73,11 @@ public class Cookie
 
 		setCookie(SID, sessionId, getExpiryDate(), null, path, false); // FIXME: find a solution that determines the path
 //        setCookie(SID, sessionId, getExpiryDate(), null, "/", false); 
-
-		if (userAuthentication.getId() != null)
-		{
-			userId = userAuthentication.getId() + "";
-			setCookie(USER_ID, userId, getExpiryDate(), null, path, false);
-		}
 	}
 
 	private static Date getExpiryDate()
 	{
 		return new Date(System.currentTimeMillis() + lifespan);
-	}
-
-	/**
-	 * Sets a new cookie
-	 *
-	 * @param name  The name of the cookie
-	 * @param value The value of the cookie
-	 */
-	public static void setCookie(String name, String value)
-	{
-		setCookie(name, value, true);
 	}
 
 	/**
@@ -171,7 +151,7 @@ public class Cookie
 	}
 
 	/**
-	 * Extends the cookie lifespan of {@link #SID} and {@link #USER_ID}.
+	 * Extends the cookie lifespan of {@link #SID}.
 	 */
 	public static void extend()
 	{
@@ -186,15 +166,6 @@ public class Cookie
 			else if (Cookies.getCookie(SID) != null)
 			{
 				setCookie(SID, Cookies.getCookie(SID), expires, null, path, false);
-			}
-
-			if (userId != null)
-			{
-				setCookie(USER_ID, userId, expires, null, path, false);
-			}
-			else if (Cookies.getCookie(USER_ID) != null)
-			{
-				setCookie(USER_ID, Cookies.getCookie(USER_ID), expires, null, path, false);
 			}
 		}
 	}
@@ -212,7 +183,11 @@ public class Cookie
 	public static RequestProperties getRequestProperties()
 	{
 		String localeString = LocaleInfo.getCurrentLocale().getLocaleName();
-		return new RequestProperties(getSessionId(), getUserId(), localeString);
+
+		UserAuthentication auth = Gatekeeper.getUserAuthentication();
+		Long id = auth != null ? auth.getId() : null;
+
+		return new RequestProperties(getSessionId(), id, localeString);
 	}
 
 	/**
@@ -229,23 +204,6 @@ public class Cookie
 		else
 		{
 			return sessionId;
-		}
-	}
-
-	/**
-	 * Returns the user id
-	 *
-	 * @return The user id
-	 */
-	public static String getUserId()
-	{
-		if (Cookies.isCookieEnabled())
-		{
-			return Cookies.getCookie(USER_ID);
-		}
-		else
-		{
-			return userId;
 		}
 	}
 }

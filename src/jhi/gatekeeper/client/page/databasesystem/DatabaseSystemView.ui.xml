@@ -1,4 +1,4 @@
-<!--~
+<!--
   ~  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
   ~  Information and Computational Sciences Group at The James Hutton Institute, Dundee
   ~
@@ -21,22 +21,22 @@
 			 xmlns:gkv='urn:import:jhi.gatekeeper.client.page.user'
 			 xmlns:ui='urn:ui:com.google.gwt.uibinder'>
 
-	<ui:import field="org.gwtbootstrap3.client.ui.constants.Styles.*"/>
+	<ui:import field="org.gwtbootstrap3.client.ui.constants.Alignment.*"/>
 	<ui:with field="msg" type="jhi.gatekeeper.client.i18n.I18n"/>
 
 	<g:FlowPanel>
 		<b:Panel>
-			<g:Label styleName="{PANEL_HEADING}" text="{msg.databaseSystemHeading}"/>
+			<b:PanelHeader text="{msg.databaseSystemHeading}"/>
 			<gk:DatabaseSystemTable/>
 		</b:Panel>
 		<b:Panel>
-			<g:Label styleName="{PANEL_HEADING}" text="{msg.addDatabaseSystemHeading}"/>
-			<g:FlowPanel styleName="{PANEL_BODY}">
+			<b:PanelHeader text="{msg.addDatabaseSystemHeading}"/>
+			<b:PanelBody>
 				<gkv:UserAddNew ui:field="newDb"/>
-			</g:FlowPanel>
-			<g:FlowPanel styleName="{PANEL_FOOTER} {CLEARFIX}">
-				<b:Button addStyleNames="{PULL_RIGHT}" text="{msg.genericButtonAdd}" type="PRIMARY" ui:field="button"/>
-			</g:FlowPanel>
+			</b:PanelBody>
+			<b:PanelFooter addStyleNames="text-right">
+				<b:Button text="{msg.genericButtonAdd}" type="PRIMARY" ui:field="button"/>
+			</b:PanelFooter>
 		</b:Panel>
 	</g:FlowPanel>
 </ui:UiBinder>

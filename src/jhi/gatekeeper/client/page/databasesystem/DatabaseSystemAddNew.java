@@ -15,17 +15,41 @@
  *  limitations under the License.
  */
 
-package jhi.gatekeeper.client.util.event;
+package jhi.gatekeeper.client.page.databasesystem;
 
-import com.google.gwt.event.shared.*;
+import com.google.gwt.core.client.*;
+import com.google.gwt.uibinder.client.*;
+import com.google.gwt.user.client.ui.*;
+
+import jhi.gatekeeper.client.widget.select.*;
+import jhi.gatekeeper.shared.bean.*;
 
 /**
- * The {@link GatekeeperEventBus} is a global event system. It can be used to fire {@link GwtEvent}s to all {@link EventHandler}s listening to this
- * {@link GwtEvent}.
- *
  * @author Sebastian Raubach
  */
-public class GatekeeperEventBus
+public class DatabaseSystemAddNew extends Composite
 {
-	public static final EventBus BUS = new SimpleEventBus();
+	private static UserAddViewUiBinder ourUiBinder = GWT.create(UserAddViewUiBinder.class);
+	@UiField
+	UserListBox     user;
+	@UiField
+	UserTypeListBox accessLevel;
+	public DatabaseSystemAddNew()
+	{
+		initWidget(ourUiBinder.createAndBindUi(this));
+	}
+
+	public User getUser()
+	{
+		return user.getValue();
+	}
+
+	public UserType getUserType()
+	{
+		return accessLevel.getValue();
+	}
+
+	interface UserAddViewUiBinder extends UiBinder<FlowPanel, DatabaseSystemAddNew>
+	{
+	}
 }

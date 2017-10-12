@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -74,11 +74,14 @@ public class UserManager extends AbstractManager
 		if (doesAdminAccountExist())
 			throw new UserExistsException();
 
-		List<Long> ids = add(user, credentials);
-		user.setId(ids.get(0));
+		add(user, credentials);
 
 		PaginatedResult<List<DatabaseSystem>> systems = DatabaseSystemManager.getList(Pagination.DEFAULT);
 
+		// Make sure that the initial Gatekeeper database exists.
+		setGatekeeperPermission(user, UserType.ADMINISTRATOR);
+
+		// Then give the admin user permissions to all the systems.
 		if (!CollectionUtils.isEmpty(systems.getResult()))
 		{
 			for (DatabaseSystem system : systems.getResult())
@@ -87,6 +90,18 @@ public class UserManager extends AbstractManager
 				DatabasePermissionManager.grantPermission(permission);
 			}
 		}
+	}
+
+	public static void setGatekeeperPermission(User user, UserType type) throws DatabaseException
+	{
+		DatabaseSystem gatekeeper = new DatabaseSystem(-1L)
+				.setSystemName("gatekeeper")
+				.setServerName("--")
+				.setDescription("Gatekeeper Database");
+		DatabaseSystemManager.ensureExists(gatekeeper);
+
+		DatabasePermission permission = new DatabasePermission(user, gatekeeper, type);
+		DatabasePermissionManager.grantPermission(permission);
 	}
 
 	/**
@@ -255,7 +270,7 @@ public class UserManager extends AbstractManager
 	 * @throws DatabaseException   Thrown if the interaction with the database fails
 	 * @throws UserExistsException Thrown if the user already exists
 	 */
-	public static List<Long> add(User user, UserCredentials credentials) throws DatabaseException, UserExistsException
+	public static void add(User user, UserCredentials credentials) throws DatabaseException, UserExistsException
 	{
 		long count = new ValueQuery(QUERY_USERNAME_EXISTS)
 				.setString(user.getUsername())
@@ -270,13 +285,16 @@ public class UserManager extends AbstractManager
 
 		String hashed = BCrypt.hashpw(credentials.getPassword(), BCrypt.gensalt(PropertyReader.getPropertyInteger(PropertyReader.GATEKEEPER_BCRYPT_ROUNDS, BCrypt.GENSALT_DEFAULT_LOG2_ROUNDS)));
 
-		return new ValueQuery(INSERT)
+		List<Long> ids = new ValueQuery(INSERT)
 				.setString(user.getUsername())
 				.setString(hashed)
 				.setString(user.getFullName())
 				.setString(user.getEmail())
 				.setLong(user.getInstitution().getId())
 				.execute();
+
+		if (!CollectionUtils.isEmpty(ids))
+			user.setId(ids.get(0));
 	}
 
 	/**

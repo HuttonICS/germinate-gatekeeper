@@ -1,4 +1,4 @@
-/**
+/*
  *  Copyright 2017 Sebastian Raubach, Toby Philp and Paul Shaw from the
  *  Information and Computational Sciences Group at The James Hutton Institute, Dundee
  *
@@ -392,6 +392,10 @@ public interface I18n extends Messages
 	@Key("page.view.user.grant.permission.new.user.type.placeholder")
 	@DefaultMessage("User type")
 	String viewUserNewUserTypePlaceholder();
+
+	@Key("page.view.user.grant.permission.new.user.placeholder")
+	@DefaultMessage("User")
+	String viewUserNewUserPlaceholder();
 
 	@Key("page.view.user.grant.permission.new.server.placeholder")
 	@DefaultMessage("Server")
