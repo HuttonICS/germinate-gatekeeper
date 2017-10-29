@@ -31,12 +31,3 @@ build-dev.properties
 
 # Files that are created during the compilation process
 /war/WEB-INF/lib-temp/
-
-# LaTeX files to exclude
-changelog/*/*.aux
-changelog/*/*.log
-changelog/*/*.bbl
-changelog/*/*.blg
-changelog/*/*.out
-changelog/*/*.toc
-changelog/*/*.synctex.gz
