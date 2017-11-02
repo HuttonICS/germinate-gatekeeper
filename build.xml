@@ -72,7 +72,7 @@
 			<fileset dir="." includes="LICENSE" />
 
 			<!-- Copy the properties file to a location accessible from the source -->
-			<zipfileset dir="." includes="config.properties" prefix="WEB-INF/classes"/>
+			<zipfileset dir="." fullpath="WEB-INF/classes/config.properties" includes="config-dev.properties"/>
 			<zipfileset dir="." includes="logging.properties" prefix="WEB-INF/classes"/>
 			<zipfileset dir="${res.dir}" includes="Gatekeeper**.properties" prefix="WEB-INF/classes"/>
 			<!-- Include necessary libraries -->

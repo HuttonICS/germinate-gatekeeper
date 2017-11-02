@@ -27,6 +27,7 @@ www-test/
 
 # Local configuration files
 build-dev.properties
+config-dev.properties
 /germinate-gatekeeper.iml
 
 # Files that are created during the compilation process
