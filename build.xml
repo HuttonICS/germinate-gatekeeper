@@ -20,7 +20,7 @@
 	<property name="src.dir" value="src"/>
 	<property name="res.dir" value="res"/>
 	<property name="build.dir" value="war"/>
-	<property file="build-dev.properties"/>
+	<property file="build.properties"/>
 	<property name="target" value="1.8"/>
 	<property name="source" value="1.8"/>
 
@@ -72,7 +72,7 @@
 			<fileset dir="." includes="LICENSE" />
 
 			<!-- Copy the properties file to a location accessible from the source -->
-			<zipfileset dir="." fullpath="WEB-INF/classes/config.properties" includes="config-dev.properties"/>
+			<zipfileset dir="." fullpath="WEB-INF/classes/config.properties" includes="config.properties"/>
 			<zipfileset dir="." includes="logging.properties" prefix="WEB-INF/classes"/>
 			<zipfileset dir="${res.dir}" includes="Gatekeeper**.properties" prefix="WEB-INF/classes"/>
 			<!-- Include necessary libraries -->

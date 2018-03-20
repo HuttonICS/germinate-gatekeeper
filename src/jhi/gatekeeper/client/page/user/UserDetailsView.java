@@ -78,7 +78,7 @@ public class UserDetailsView extends Composite
 			username.setText(user.getUsername());
 			fullName.setText(user.getFullName());
 			email.setText(user.getEmail());
-			institution.setText(user.getInstitution().getName() + "(" + user.getInstitution().getAcronym() + ") - " + user.getInstitution().getAddress());
+			institution.setText(user.getInstitution().getName() + " (" + user.getInstitution().getAcronym() + ") - " + user.getInstitution().getAddress());
 			createdOn.setText(FORMAT_LOCALIZED_DATE_TIME.format(user.getCreationDate()));
 		}
 	}
