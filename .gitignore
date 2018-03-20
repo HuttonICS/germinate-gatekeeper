@@ -26,7 +26,9 @@ www-test/
 .gwt-tmp/
 
 # Local configuration files
+build.properties
 build-dev.properties
+config.properties
 config-dev.properties
 /germinate-gatekeeper.iml
 
