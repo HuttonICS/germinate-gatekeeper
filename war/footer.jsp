@@ -26,7 +26,7 @@
 
 	String yearString = "2013-" + year;
 
-	String versionName = "3.4.0";
+	String versionName = "3.5.0";
 %>
 
 <footer class="footer">

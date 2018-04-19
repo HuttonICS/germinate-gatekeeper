@@ -36,6 +36,10 @@ public interface I18n extends Messages
 	@DefaultMessage("dd/MM/yyyy HH:mm:ss")
 	String genericDateTimeFormat();
 
+	@Key("generic.date.format")
+	@DefaultMessage("dd/MM/yyyy")
+	String genericDateFormat();
+
 	@Key("generic.button.add")
 	@DefaultMessage("Add")
 	String genericButtonAdd();

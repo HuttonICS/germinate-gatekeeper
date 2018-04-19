@@ -33,6 +33,8 @@ public class I18n
 	public static final String EMAIL_MESSAGE_USER_ACTIVATED_AUTOMATICALLY_ADMIN_NOTIFICATION = "email.message.user.activated.automatically.admin.notification";
 	public static final String EMAIL_TITLE_NEW_PASSWORD                                      = "email.title.new.password";
 	public static final String EMAIL_MESSAGE_NEW_PASSWORD                                    = "email.message.new.password";
+	public static final String EMAIL_TITLE_PASSWORD_CHANGE                                   = "email.title.password.change";
+	public static final String EMAIL_MESSAGE_PASSWORD_CHANGE                                 = "email.message.password.change";
 	public static final String EMAIL_TITLE_USER_ACTIVATED                                    = "email.title.user.activated";
 	public static final String EMAIL_MESSAGE_USER_ACTIVATED                                  = "email.message.user.activated";
 	public static final String EMAIL_TITLE_USER_REQUEST_PENDING                              = "email.title.user.request.pending";

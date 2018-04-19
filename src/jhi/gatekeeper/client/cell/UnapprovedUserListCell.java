@@ -17,8 +17,10 @@
 
 package jhi.gatekeeper.client.cell;
 
+import com.google.gwt.i18n.client.*;
 import com.google.gwt.safehtml.shared.*;
 
+import jhi.gatekeeper.client.i18n.*;
 import jhi.gatekeeper.shared.bean.*;
 
 /**
@@ -26,6 +28,8 @@ import jhi.gatekeeper.shared.bean.*;
  */
 public class UnapprovedUserListCell extends AbstractListCell<UnapprovedUser>
 {
+	private static final DateTimeFormat FORMAT_LOCALIZED_DATE = DateTimeFormat.getFormat(I18n.LANG.genericDateFormat());
+
 	@Override
 	public void render(Context context, UnapprovedUser value, SafeHtmlBuilder sb)
 	{
@@ -35,13 +39,9 @@ public class UnapprovedUserListCell extends AbstractListCell<UnapprovedUser>
 		}
 
 		SafeHtml safeValue = SafeHtmlUtils.fromString(value.getUsername());
+		String date = value.getCreationDate() != null ? FORMAT_LOCALIZED_DATE.format(value.getCreationDate()) : "";
+		SafeHtml safeDate = SafeHtmlUtils.fromString(date);
 
-		/* Check if the user is an admin */
-		boolean isAdmin = value.isGatekeeperAdmin();
-
-		if (isAdmin)
-			sb.append(USER_TEMPLATES.admin(safeValue));
-		else
-			sb.append(USER_TEMPLATES.user(safeValue));
+		sb.append(USER_TEMPLATES.userDate(safeValue, safeDate));
 	}
 }

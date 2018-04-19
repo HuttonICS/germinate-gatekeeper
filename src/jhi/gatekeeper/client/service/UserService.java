@@ -38,7 +38,7 @@ public interface UserService extends RemoteService
 
 	void updateUserEmail(RequestProperties properties, String email) throws InvalidCredentialsException, InvalidSessionException, DatabaseException;
 
-	void updatePassword(RequestProperties properties, UserCredentials credentials) throws InvalidCredentialsException, InvalidSessionException, DatabaseException;
+	void updatePassword(RequestProperties properties, UserCredentials credentials) throws InvalidCredentialsException, InvalidSessionException, DatabaseException, EmailException;
 
 	long getUserCount(RequestProperties properties, User searchBean) throws InvalidSessionException, InsufficientPermissionsException, DatabaseException;
 

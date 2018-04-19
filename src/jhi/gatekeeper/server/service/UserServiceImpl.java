@@ -64,16 +64,19 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 	}
 
 	@Override
-	public void updatePassword(RequestProperties properties, UserCredentials credentials) throws InvalidCredentialsException, InvalidSessionException, DatabaseException
+	public void updatePassword(RequestProperties properties, UserCredentials credentials) throws InvalidCredentialsException, InvalidSessionException, DatabaseException, EmailException
 	{
 		checkSession(properties);
 
 		UserAuthentication user = (UserAuthentication) getThreadLocalRequest().getSession().getAttribute(Session.USER);
+		UserInternal u = UserManager.getUserByUsernameAndEmail(user.getUsername(), user.getEmailAddress());
 
 		if (user == null)
 			throw new InvalidCredentialsException();
 
 		UserManager.updatePassword(UserManager.getUserByUsernameAndEmail(user.getUsername(), user.getEmailAddress()), credentials.getPassword());
+
+		Email.sendPasswordChangeInfo(properties.getLocale(), u);
 
 		Session.terminateSessions(user.getId());
 	}

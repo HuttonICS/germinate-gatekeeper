@@ -33,11 +33,14 @@ public abstract class AbstractListCell<T> extends AbstractCell<T>
 
 	public interface UserTemplates extends SafeHtmlTemplates
 	{
-		@Template("<i class=\"" + Classes.FA + " " + Classes.FA_FW + " " + Classes.FA_USER_SECRET + "\"></i>&nbsp;{0}</div>")
+		@Template("<i class=\"" + Classes.FA + " " + Classes.FA_FW + " " + Classes.FA_USER_SECRET + "\"></i><span>&nbsp;{0}</span></div>")
 		SafeHtml admin(SafeHtml value);
 
-		@Template("<i class=\"" + Classes.FA + " " + Classes.FA_FW + " " + Classes.FA_USER + "\"></i>&nbsp;{0}</div>")
+		@Template("<i class=\"" + Classes.FA + " " + Classes.FA_FW + " " + Classes.FA_USER + "\"></i><span>&nbsp;{0}</span></div>")
 		SafeHtml user(SafeHtml value);
+
+		@Template("<i class=\"" + Classes.FA + " " + Classes.FA_FW + " " + Classes.FA_USER + "\"></i><span>&nbsp;{0}</span><span class='pull-right'>{1}</span></div>")
+		SafeHtml userDate(SafeHtml value, SafeHtml date);
 
 		@Template("<a href='{0}'>{1}</a>")
 		SafeHtml anchor(SafeUri url, String text);

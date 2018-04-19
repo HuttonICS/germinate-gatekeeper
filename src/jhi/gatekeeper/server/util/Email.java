@@ -60,6 +60,11 @@ public class Email
 		send(user.getEmail(), I18n.getString(locale, I18n.EMAIL_TITLE_NEW_PASSWORD), I18n.getString(locale, I18n.EMAIL_MESSAGE_NEW_PASSWORD, password));
 	}
 
+	public static void sendPasswordChangeInfo(Locale locale, UserInternal user) throws EmailException
+	{
+		send(user.getEmail(), I18n.getString(locale, I18n.EMAIL_TITLE_PASSWORD_CHANGE), I18n.getString(locale, I18n.EMAIL_MESSAGE_PASSWORD_CHANGE));
+	}
+
 	public static void sendActivationConfirmation(Locale locale, User user) throws EmailException
 	{
 		send(user.getEmail(), I18n.getString(locale, I18n.EMAIL_TITLE_USER_ACTIVATED), I18n.getString(locale, I18n.EMAIL_MESSAGE_USER_ACTIVATED));
