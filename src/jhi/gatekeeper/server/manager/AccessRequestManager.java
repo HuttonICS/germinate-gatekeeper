@@ -36,7 +36,7 @@ import jhi.gatekeeper.shared.bean.*;
 public class AccessRequestManager extends AbstractManager
 {
 	private static final String QUERY_COUNT              = "SELECT COUNT(1) AS count FROM access_requests WHERE has_been_rejected = 0";
-	private static final String QUERY_LIST_DATA          = "SELECT * FROM access_requests WHERE has_been_rejected = 0 ORDER BY user_id ASC LIMIT ?, ?";
+	private static final String QUERY_LIST_DATA          = "SELECT * FROM access_requests WHERE has_been_rejected = 0 ORDER BY created_on ASC LIMIT ?, ?";
 	private static final String SELECT_BY_ACTIVATION_KEY = "SELECT * FROM access_requests WHERE activation_key = ?";
 	private static final String SELECT_BY_ID             = "SELECT * FROM access_requests WHERE id = ?";
 
