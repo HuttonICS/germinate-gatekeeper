@@ -34,14 +34,15 @@ public class BootstrapInputGroup extends Composite
 {
 	private static BootstrapInputGroupUiBinder ourUiBinder = GWT.create(BootstrapInputGroupUiBinder.class);
 	@UiField
-	FormLabel label;
+	FormLabel           label;
 	@UiField
 	InputGroupWithAddon addon;
 	@UiField
-	Input input;
+	Input               input;
 	private String message;
 	private String placeholder;
 	private String fa;
+
 	@UiConstructor
 	public BootstrapInputGroup(final InputType type)
 	{
@@ -98,7 +99,7 @@ public class BootstrapInputGroup extends Composite
 		input.setValue(value);
 	}
 
-	interface BootstrapInputGroupUiBinder extends UiBinder<FormGroup, BootstrapInputGroup>
+	interface BootstrapInputGroupUiBinder extends UiBinder<FlowPanel, BootstrapInputGroup>
 	{
 	}
 }

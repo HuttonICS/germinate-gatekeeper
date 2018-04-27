@@ -29,6 +29,7 @@ public class UserCredentials implements Serializable
 	private static final long serialVersionUID = 2190189706267704069L;
 
 	private String username;
+	private String oldPassword;
 	private String password;
 
 	public UserCredentials()
@@ -41,6 +42,13 @@ public class UserCredentials implements Serializable
 		this.password = password;
 	}
 
+	public UserCredentials(String username, String oldPassword, String password)
+	{
+		this.username = username;
+		this.oldPassword = oldPassword;
+		this.password = password;
+	}
+
 	public String getUsername()
 	{
 		return username;
@@ -49,6 +57,17 @@ public class UserCredentials implements Serializable
 	public void setUsername(String username)
 	{
 		this.username = username;
+	}
+
+	public String getOldPassword()
+	{
+		return oldPassword;
+	}
+
+	public UserCredentials setOldPassword(String oldPassword)
+	{
+		this.oldPassword = oldPassword;
+		return this;
 	}
 
 	public String getPassword()

@@ -69,10 +69,15 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 		checkSession(properties);
 
 		UserAuthentication user = (UserAuthentication) getThreadLocalRequest().getSession().getAttribute(Session.USER);
-		UserInternal u = UserManager.getUserByUsernameAndEmail(user.getUsername(), user.getEmailAddress());
 
 		if (user == null)
 			throw new InvalidCredentialsException();
+
+		UserInternal u = UserManager.getUserByUsernameAndEmail(user.getUsername(), user.getEmailAddress());
+
+		// Check the old password to make sure it's correct!
+		if(!BCrypt.checkpw(credentials.getOldPassword(), u.getPassword()))
+			throw new InvalidCredentialsException("Invalid password");
 
 		UserManager.updatePassword(UserManager.getUserByUsernameAndEmail(user.getUsername(), user.getEmailAddress()), credentials.getPassword());
 

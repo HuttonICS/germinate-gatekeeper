@@ -25,6 +25,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="js/toastr.min.js"></script>
+	<script src="js/zxcvbn.js"></script>
 
 	<script src="js/bootstrap.min.js"></script>
 

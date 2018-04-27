@@ -218,6 +218,10 @@ public interface I18n extends Messages
 	@DefaultMessage("Passwords don''t match.")
 	String notificationUserPasswordsDontMatch();
 
+	@Key("notification.user.password.too.weak")
+	@DefaultMessage("Your password is too weak.")
+	String notificationUserPasswordsTooWeak();
+
 	@Key("notification.user.password.changed")
 	@DefaultMessage("Password successfully changed. Please log out and back in.")
 	String notificationUserPasswordChanged();
@@ -324,12 +328,16 @@ public interface I18n extends Messages
 	@DefaultMessage("Update email address")
 	String updateEmailLabel();
 
-	@Key("page.settings.password.update.hint")
-	@DefaultMessage("Password")
-	String updatePasswordHint();
+	@Key("page.settings.password.old.update.hint")
+	@DefaultMessage("Old password")
+	String updateOldPasswordHint();
+
+	@Key("page.settings.password.new.update.hint")
+	@DefaultMessage("New password")
+	String updateNewPasswordHint();
 
 	@Key("page.settings.password.update.confirm.hint")
-	@DefaultMessage("Confirm password")
+	@DefaultMessage("Confirm new password")
 	String updatePasswordConfirmHint();
 
 
@@ -563,4 +571,24 @@ public interface I18n extends Messages
 	@Key("cookie.policy.text")
 	@DefaultMessage("<p>This website''s sole use of cookies (local storage) is to remember user settings between visits.</p><p>You can reject these cookies if you wish (and it won''t affect your usage of the site) either by blocking them using the options in your browser, or by installing plugins such as the <a href=\"https://tools.google.com/dlpage/gaoptout?hl=en\" target=\"_self\">Google Analytics Opt-out Browser Add-on</a> or <a href=\"https://www.ghostery.com/\" target=\"_blank\">Ghostery</a>.</p><p>You may also find the following links useful:</p><ul><li><a href=\"http://www.ico.gov.uk/for_organisations/privacy_and_electronic_communications/the_guide/cookies.aspx\">ICO Cookie Regulations and the EU Cookie Law</a></li></ul>")
 	SafeHtml cookiePolicyText();
+
+	@Key("widget.password.strength.zero")
+	@DefaultMessage("Your password is too guessable.")
+	String passwordStrengthZero();
+
+	@Key("widget.password.strength.one")
+	@DefaultMessage("Your password is very guessable.")
+	String passwordStrengthOne();
+
+	@Key("widget.password.strength.two")
+	@DefaultMessage("Your password is somewhat guessable.")
+	String passwordStrengthTwo();
+
+	@Key("widget.password.strength.three")
+	@DefaultMessage("Your password is safely unguessable.")
+	String passwordStrengthThree();
+
+	@Key("widget.password.strength.four")
+	@DefaultMessage("Your password is very unguessable.")
+	String passwordStrengthFour();
 }

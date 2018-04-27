@@ -70,22 +70,8 @@ public class LoginPage extends GatekeeperPage
 				/* Handle the exception */
 				if (caught instanceof InvalidCredentialsException)
 				{
-					switch (((InvalidCredentialsException) caught).getErrorType())
-					{
-						case InvalidCredentialsException.INVALID_PASSWORD:
-							Notification.notify(Notification.Type.ERROR, I18n.LANG.notificationLoginInvalidPassword());
-							highlightPassword = true;
-							break;
-
-						case InvalidCredentialsException.INVALID_USERNAME:
-							Notification.notify(Notification.Type.ERROR, I18n.LANG.notificationLoginInvalidUsername());
-							highlightUsername = true;
-							break;
-
-						default:
-							Notification.notify(Notification.Type.ERROR, I18n.LANG.notificationLoginUnsuccessful());
-							highlightPassword = true;
-					}
+					Notification.notify(Notification.Type.ERROR, I18n.LANG.notificationLoginUnsuccessful());
+					highlightPassword = true;
 				}
 				else if (caught instanceof InsufficientPermissionsException)
 				{

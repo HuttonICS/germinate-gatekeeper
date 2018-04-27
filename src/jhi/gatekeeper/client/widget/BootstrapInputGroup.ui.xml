@@ -16,6 +16,7 @@
   -->
 
 <ui:UiBinder xmlns:b='urn:import:org.gwtbootstrap3.client.ui'
+			 xmlns:g='urn:import:com.google.gwt.user.client.ui'
 			 xmlns:ui='urn:ui:com.google.gwt.uibinder'
 			 xmlns:w='urn:import:jhi.gatekeeper.client.widget'>
 
@@ -23,10 +24,10 @@
 	<ui:import field="jhi.gatekeeper.client.util.Classes.*"/>
 	<ui:with field="msg" type="jhi.gatekeeper.client.i18n.I18n"/>
 
-	<b:FormGroup>
+	<g:FlowPanel>
 		<b:FormLabel ui:field="label"/>
 		<w:InputGroupWithAddon ui:field="addon">
 			<b:Input type="TEXT" ui:field="input"/>
 		</w:InputGroupWithAddon>
-	</b:FormGroup>
+	</g:FlowPanel>
 </ui:UiBinder>
