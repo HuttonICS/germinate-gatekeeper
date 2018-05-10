@@ -82,12 +82,12 @@ public class UpdatePasswordView extends Composite
 				break;
 			case 2:
 				progressBar.setPercent(50);
-				progressBar.setType(ProgressBarType.DANGER);
+				progressBar.setType(ProgressBarType.WARNING);
 				tooltip.setTitle(I18n.LANG.passwordStrengthTwo());
 				break;
 			case 3:
 				progressBar.setPercent(75);
-				progressBar.setType(ProgressBarType.WARNING);
+				progressBar.setType(ProgressBarType.SUCCESS);
 				tooltip.setTitle(I18n.LANG.passwordStrengthThree());
 				break;
 			case 4:
