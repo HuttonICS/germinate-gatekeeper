@@ -94,10 +94,7 @@ public class UserManager extends AbstractManager
 
 	public static void setGatekeeperPermission(User user, UserType type) throws DatabaseException
 	{
-		DatabaseSystem gatekeeper = new DatabaseSystem(-1L)
-				.setSystemName("gatekeeper")
-				.setServerName("--")
-				.setDescription("Gatekeeper Database");
+		DatabaseSystem gatekeeper = DatabaseSystemManager.getGatekeeper();
 		DatabaseSystemManager.ensureExists(gatekeeper);
 
 		DatabasePermission permission = new DatabasePermission(user, gatekeeper, type);

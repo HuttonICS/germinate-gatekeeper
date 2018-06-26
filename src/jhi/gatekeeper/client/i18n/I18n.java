@@ -591,4 +591,9 @@ public interface I18n extends Messages
 	@Key("widget.password.strength.four")
 	@DefaultMessage("Your password is very unguessable.")
 	String passwordStrengthFour();
+
+
+	@Key("widget.loading.indicator.text")
+	@DefaultMessage("Please wait...")
+	String loadingIndicatorText();
 }

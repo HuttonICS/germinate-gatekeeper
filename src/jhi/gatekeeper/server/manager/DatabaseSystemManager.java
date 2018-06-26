@@ -31,9 +31,10 @@ import jhi.gatekeeper.shared.bean.*;
  */
 public class DatabaseSystemManager extends AbstractManager
 {
-	private static final String QUERY_ALL   = "SELECT * FROM database_systems LIMIT ?, ?";
-	private static final String QUERY_BY_ID = "SELECT * FROM database_systems WHERE id = ?";
-	private static final String QUERY_COUNT = "SELECT COUNT(1) AS count FROM database_systems";
+	private static final String QUERY_ALL        = "SELECT * FROM database_systems LIMIT ?, ?";
+	private static final String QUERY_BY_ID      = "SELECT * FROM database_systems WHERE id = ?";
+	private static final String QUERY_COUNT      = "SELECT COUNT(1) AS count FROM database_systems";
+	private static final String QUERY_GATEKEEPER = "SELECT * FROM database_systems WHERE system_name = 'gatekeeper' AND server_name = '--'";
 
 	private static final String INSERT_WHERE_NOT_EXISTS = "INSERT INTO database_systems (system_name, server_name, description) VALUES(?, ?, ?)";
 
@@ -100,7 +101,7 @@ public class DatabaseSystemManager extends AbstractManager
 	 */
 	public static void ensureExists(DatabaseSystem databaseSystem) throws DatabaseException
 	{
-		if(!DatabaseObject.hasId(databaseSystem))
+		if (!DatabaseObject.hasId(databaseSystem))
 		{
 			ValueQuery query = new ValueQuery(INSERT_WHERE_NOT_EXISTS)
 					.setString(databaseSystem.getSystemName())
@@ -138,6 +139,13 @@ public class DatabaseSystemManager extends AbstractManager
 	{
 		ensureExists(databaseSystem);
 		return databaseSystem.getId() != null;
+	}
+
+	public static DatabaseSystem getGatekeeper() throws DatabaseException
+	{
+		return new DatabaseObjectQuery<DatabaseSystem>(QUERY_GATEKEEPER)
+				.run()
+				.getObject(DatabaseSystem.Parser.Instance.getInstance());
 	}
 
 	@Override

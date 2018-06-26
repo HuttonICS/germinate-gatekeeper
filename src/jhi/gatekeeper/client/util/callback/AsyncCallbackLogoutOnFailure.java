@@ -19,8 +19,10 @@ package jhi.gatekeeper.client.util.callback;
 
 import com.google.gwt.user.client.rpc.*;
 
+import jhi.gatekeeper.client.i18n.*;
 import jhi.gatekeeper.client.util.*;
 import jhi.gatekeeper.client.util.event.*;
+import jhi.gatekeeper.client.widget.*;
 
 /**
  * {@link AsyncCallbackLogoutOnFailure} is an {@link AsyncCallback} that will take care of most failure cases. As an example: An
@@ -33,6 +35,8 @@ import jhi.gatekeeper.client.util.event.*;
  */
 public class AsyncCallbackLogoutOnFailure<T> implements AsyncCallback<T>
 {
+	private LoadingIndicator indicator;
+
 	public AsyncCallbackLogoutOnFailure()
 	{
 		super();
@@ -40,9 +44,23 @@ public class AsyncCallbackLogoutOnFailure<T> implements AsyncCallback<T>
 		Cookie.extend();
 	}
 
+	public AsyncCallbackLogoutOnFailure(boolean addLoadingIndicator)
+	{
+		this();
+
+		if (addLoadingIndicator)
+		{
+			indicator = new LoadingIndicator(I18n.LANG.loadingIndicatorText());
+			indicator.show();
+		}
+	}
+
 	@Override
 	public final void onFailure(Throwable caught)
 	{
+		if(indicator != null)
+			indicator.hide();
+
 		onFailureImpl(caught);
 	}
 
@@ -64,6 +82,9 @@ public class AsyncCallbackLogoutOnFailure<T> implements AsyncCallback<T>
 	@Override
 	public final void onSuccess(T result)
 	{
+		if(indicator != null)
+			indicator.hide();
+
 		onSuccessImpl(result);
 	}
 

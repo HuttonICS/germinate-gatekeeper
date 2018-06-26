@@ -42,7 +42,7 @@ import jhi.gatekeeper.shared.bean.*;
 public class UnapprovedUserDecisionView extends Composite
 {
 	private static UnapprovedUserDecisionViewUiBinder ourUiBinder = GWT.create(UnapprovedUserDecisionViewUiBinder.class);
-	private final HandlerRegistration handlerRegistration;
+	private final  HandlerRegistration                handlerRegistration;
 	@UiField
 	Button delete;
 
@@ -66,7 +66,7 @@ public class UnapprovedUserDecisionView extends Composite
 			UnapprovedUserDecisionView.this.setVisible(event.getUnapprovedUser() != null);
 		});
 
-		final AsyncCallbackLogoutOnFailure<Void> callback = new AsyncCallbackLogoutOnFailure<Void>()
+		final AsyncCallbackLogoutOnFailure<Void> callback = new AsyncCallbackLogoutOnFailure<Void>(true)
 		{
 			@Override
 			protected void onSuccessImpl(Void result)
@@ -96,8 +96,8 @@ public class UnapprovedUserDecisionView extends Composite
 						UnapprovedUserService.Instance.getInstance().reject(Cookie.getRequestProperties(), user, reason.getText(), callback);
 				}
 			}
-					.addShownHandler(evt -> reason.setFocus(true))
-					.setType(ModalDialog.ModalDialogType.OK_CANCEL);
+				.addShownHandler(evt -> reason.setFocus(true))
+				.setType(ModalDialog.ModalDialogType.OK_CANCEL);
 
 			dialog.show();
 		});

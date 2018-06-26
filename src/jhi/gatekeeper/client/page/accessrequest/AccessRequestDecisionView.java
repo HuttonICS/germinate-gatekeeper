@@ -63,7 +63,7 @@ public class AccessRequestDecisionView extends Composite
 			AccessRequestDecisionView.this.setVisible(event.getAccessRequest() != null);
 		});
 
-		final AsyncCallbackLogoutOnFailure<Void> callback = new AsyncCallbackLogoutOnFailure<Void>()
+		final AsyncCallbackLogoutOnFailure<Void> callback = new AsyncCallbackLogoutOnFailure<Void>(true)
 		{
 			@Override
 			protected void onSuccessImpl(Void result)
