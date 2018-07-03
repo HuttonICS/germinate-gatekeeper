@@ -67,6 +67,8 @@ public class Classes
 
 	public static final String COUNTRY = "country";
 
+	public static final String COL_XXS_12 = "col-xxs-12";
+
 	/**
 	 * Returns the combined style string
 	 *

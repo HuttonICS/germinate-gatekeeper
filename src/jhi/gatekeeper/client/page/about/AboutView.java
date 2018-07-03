@@ -19,15 +19,16 @@ package jhi.gatekeeper.client.page.about;
 
 
 import com.google.gwt.core.client.*;
+import com.google.gwt.dom.client.*;
 import com.google.gwt.i18n.shared.*;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
 
-import org.gwtbootstrap3.client.ui.Panel;
-
 import java.util.*;
 
 import jhi.gatekeeper.client.i18n.*;
+import jhi.gatekeeper.client.page.about.resource.*;
+import jhi.gatekeeper.client.widget.*;
 
 /**
  * @author Sebastian Raubach
@@ -35,17 +36,46 @@ import jhi.gatekeeper.client.i18n.*;
 public class AboutView extends Composite
 {
 	private static AboutViewUiBinder ourUiBinder = GWT.create(AboutViewUiBinder.class);
+
 	@UiField
-	HTML message;
+	SimplePanel banner;
+	@UiField
+	HTML        message;
+
+	@UiField
+	AnchorWithContent germinateAnchor;
+	@UiField
+	Image             germinate;
+	@UiField
+	AnchorWithContent huttonAnchor;
+	@UiField
+	Image             hutton;
+	@UiField
+	AnchorWithContent icsAnchor;
+	@UiField
+	Image             ics;
 
 	public AboutView()
 	{
 		initWidget(ourUiBinder.createAndBindUi(this));
 
+		jsniBanner(banner.getElement());
+
 		message.setHTML(I18n.LANG.aboutMessage(I18n.LANG.menuTopForgottenPassword(), DateTimeFormat.getFormat("yyyy").format(new Date())));
+
+		germinateAnchor.setHref("https://ics.hutton.ac.uk/get-germinate/");
+		germinate.setUrl(Resources.INSTANCE.germinate().getSafeUri());
+		huttonAnchor.setHref("http://www.hutton.ac.uk/");
+		hutton.setUrl(Resources.INSTANCE.hutton().getSafeUri());
+		icsAnchor.setHref("https://ics.hutton.ac.uk/");
+		ics.setUrl(Resources.INSTANCE.ics().getSafeUri());
 	}
 
-	interface AboutViewUiBinder extends UiBinder<Panel, AboutView>
+	private native void jsniBanner(Element element)/*-{
+		$wnd.$(element).huttonBanner();
+	}-*/;
+
+	interface AboutViewUiBinder extends UiBinder<FlowPanel, AboutView>
 	{
 	}
 }

@@ -26,12 +26,15 @@
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="js/toastr.min.js"></script>
 	<script src="js/zxcvbn.js"></script>
+	<script src="js/hutton-banner.js"></script>
 
 	<script src="js/bootstrap.min.js"></script>
 
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
 	<link type="text/css" rel="stylesheet" href="css/toastr.css"/>
 	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap-xxs.css"/>
+	<link rel="stylesheet" href="css/hutton-banner.css"/>
 
 	<script src="gatekeeper/gatekeeper.nocache.js"></script>
 
@@ -94,7 +97,8 @@
 					<div class="panel-heading">JavaScript</div>
 					<div class="panel-body">
 						<p>Your web browser must have JavaScript enabled in order for this application to display correctly.</p>
-						<p>For guidance on how to enable JavaScript, please follow <a href="http://enable-javascript.com/" target="_blank">this link</a>.</p>
+						<p>For guidance on how to enable JavaScript, please follow <a href="http://enable-javascript.com/" target="_blank">this
+							link</a>.</p>
 					</div>
 				</div>
 			</noscript>
