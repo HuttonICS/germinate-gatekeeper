@@ -27,8 +27,6 @@ import com.google.gwt.user.client.ui.*;
 import java.util.*;
 
 import jhi.gatekeeper.client.i18n.*;
-import jhi.gatekeeper.client.page.about.resource.*;
-import jhi.gatekeeper.client.widget.*;
 
 /**
  * @author Sebastian Raubach
@@ -42,19 +40,6 @@ public class AboutView extends Composite
 	@UiField
 	HTML        message;
 
-	@UiField
-	AnchorWithContent germinateAnchor;
-	@UiField
-	Image             germinate;
-	@UiField
-	AnchorWithContent huttonAnchor;
-	@UiField
-	Image             hutton;
-	@UiField
-	AnchorWithContent icsAnchor;
-	@UiField
-	Image             ics;
-
 	public AboutView()
 	{
 		initWidget(ourUiBinder.createAndBindUi(this));
@@ -62,13 +47,6 @@ public class AboutView extends Composite
 		jsniBanner(banner.getElement());
 
 		message.setHTML(I18n.LANG.aboutMessage(I18n.LANG.menuTopForgottenPassword(), DateTimeFormat.getFormat("yyyy").format(new Date())));
-
-		germinateAnchor.setHref("https://ics.hutton.ac.uk/get-germinate/");
-		germinate.setUrl(Resources.INSTANCE.germinate().getSafeUri());
-		huttonAnchor.setHref("http://www.hutton.ac.uk/");
-		hutton.setUrl(Resources.INSTANCE.hutton().getSafeUri());
-		icsAnchor.setHref("https://ics.hutton.ac.uk/");
-		ics.setUrl(Resources.INSTANCE.ics().getSafeUri());
 	}
 
 	private native void jsniBanner(Element element)/*-{
