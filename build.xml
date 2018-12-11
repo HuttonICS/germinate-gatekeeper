@@ -57,7 +57,7 @@
 			<arg line="-localWorkers 2" />
 			<arg line="-logLevel INFO"/>
 			<jvmarg value="-Xmx1024M"/>
-			<arg value="${project.root}"/>
+			<arg value="jhi.gatekeeper.gatekeeper"/>
 		</java>
 	</target>
 
@@ -71,6 +71,9 @@
 			<!-- Include the license -->
 			<fileset dir="." includes="LICENSE" />
 
+			<!-- Include the SQL update scripts for Flyway -->
+			<zipfileset dir="${src.dir}" includes="**/*.sql" prefix="WEB-INF/classes"/>
+
 			<!-- Copy the properties file to a location accessible from the source -->
 			<zipfileset dir="." fullpath="WEB-INF/classes/config.properties" includes="config.properties"/>
 			<zipfileset dir="." includes="logging.properties" prefix="WEB-INF/classes"/>
@@ -80,6 +83,7 @@
 				<include name="**/gwt-servlet.jar"/>
 				<include name="**/mailapi.jar"/>
 				<include name="**/smtp.jar"/>
+				<include name="**/jakarta.activation.jar"/>
 				<include name="**/jhi-database-commons-gwt.jar"/>
 				<include name="**/mysql-connector-java-**.jar"/>
 				<include name="**/flyway-core-**.jar"/>

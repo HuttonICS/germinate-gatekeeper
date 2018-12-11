@@ -18,6 +18,7 @@
 package jhi.gatekeeper.server.util;
 
 import java.io.*;
+import java.net.*;
 import java.nio.file.FileSystem;
 import java.nio.file.*;
 import java.util.*;
@@ -57,7 +58,7 @@ public class PropertyReader
 	/** The name of the properties file */
 	private static final String PROPERTIES_FILE = "config.properties";
 
-	private static Properties properties = new Properties();
+	private static Properties                   properties = new Properties();
 	private static PropertyChangeListenerThread fileWatcher;
 
 	private static Thread   fileWatcherThread;
@@ -68,22 +69,22 @@ public class PropertyReader
 	 */
 	public static void initialize()
 	{
-		/* Start to listen for file changes */
-		Path path = new File(PropertyReader.class.getClassLoader().getResource(PROPERTIES_FILE).getPath()).getParentFile().toPath();
-		FileSystem fs = path.getFileSystem();
-
 		try
 		{
+			/* Start to listen for file changes */
+			Path path = new File(PropertyReader.class.getClassLoader().getResource(PROPERTIES_FILE).toURI()).getParentFile().toPath();
+			FileSystem fs = path.getFileSystem();
+
 			WatchService service = fs.newWatchService();
 			/* start the file watcher thread below */
 			fileWatcher = new PropertyChangeListenerThread(service);
 			fileWatcherThread = new Thread(fileWatcher, "PropertyFileWatcher");
 			fileWatcherThread.start();
 
-            /* Register events */
+			/* Register events */
 			watchKey = path.register(service, StandardWatchEventKinds.ENTRY_MODIFY);
 		}
-		catch (IOException e)
+		catch (IOException | URISyntaxException | NullPointerException e)
 		{
 			throw new RuntimeException(e);
 		}
@@ -300,10 +301,10 @@ public class PropertyReader
 					return;
 				}
 
-                /*
+				/*
 				 * We have a polled event, now we traverse it and receive all
-                 * the states from it
-                 */
+				 * the states from it
+				 */
 				for (WatchEvent<?> event : key.pollEvents())
 				{
 					WatchEvent.Kind<?> kind = event.kind();
@@ -313,9 +314,9 @@ public class PropertyReader
 						continue;
 					}
 
-                    /*
+					/*
 					 * The filename is the context of the event
-                     */
+					 */
 					@SuppressWarnings("unchecked")
 					WatchEvent<Path> ev = (WatchEvent<Path>) event;
 					Path filename = ev.context();
@@ -324,11 +325,11 @@ public class PropertyReader
 						loadProperties();
 				}
 
-                /*
+				/*
 				 * Reset the key -- this step is critical if you want to receive
-                 * further watch events. If the key is no longer valid, the
-                 * directory is inaccessible so exit the loop.
-                 */
+				 * further watch events. If the key is no longer valid, the
+				 * directory is inaccessible so exit the loop.
+				 */
 				boolean valid = key.reset();
 
 				try

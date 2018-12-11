@@ -142,7 +142,7 @@ public class Email
 
 			Session session;
 
-			if (StringUtils.isEmpty(config.username, config.password))
+			if (StringUtils.isEmpty(config.password))
 			{
 				props.put("mail.smtp.auth", "false");
 				session = Session.getInstance(props);

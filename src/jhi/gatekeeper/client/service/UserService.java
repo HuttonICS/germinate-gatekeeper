@@ -50,7 +50,7 @@ public interface UserService extends RemoteService
 
 	void sendNewPassword(RequestProperties properties, String username, String email) throws InvalidCredentialsException, EmailException, DatabaseException;
 
-	void activateUser(RequestProperties properties, String key) throws InvalidActivationKeyException, EmailException, DatabaseException, UserNotFoundException, SuspendedUserException;
+	ActivationDecision activateUser(RequestProperties properties, String key) throws InvalidActivationKeyException, EmailException, DatabaseException, UserNotFoundException, SuspendedUserException;
 
 	void setHasAccessToGatekeeper(RequestProperties properties, User user) throws InvalidSessionException, InsufficientPermissionsException, DatabaseException;
 

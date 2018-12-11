@@ -43,10 +43,12 @@ public class UnapprovedUser extends User
 	public static final String INSTITUTION_ADDRESS = "institution_address";
 	public static final String DATABASE_SYSTEM_ID  = "database_system_id";
 	public static final String HAS_BEEN_REJECTED   = "has_been_rejected";
+	public static final String NEEDS_APPROVAL      = "needs_approval";
 	public static final String ACTIVATION_KEY      = "activation_key";
 
 	private DatabaseSystem databaseSystem;
 	private boolean        hasBeenRejected;
+	private boolean        needsApproval;
 	private String         activationKey;
 
 	public UnapprovedUser()
@@ -58,12 +60,13 @@ public class UnapprovedUser extends User
 		super(id);
 	}
 
-	public UnapprovedUser(Long id, String username, String fullName, String email, DatabaseSystem databaseSystem, Institution institution, Date creationDate, boolean hasAccessToGatekeeper, boolean isGatekeeperAdmin, boolean hasBeenRejected, String activationKey)
+	public UnapprovedUser(Long id, String username, String fullName, String email, DatabaseSystem databaseSystem, Institution institution, Date creationDate, boolean hasAccessToGatekeeper, boolean isGatekeeperAdmin, boolean hasBeenRejected, boolean needsApproval, String activationKey)
 	{
 		super(id, username, fullName, email, institution, creationDate, hasAccessToGatekeeper, isGatekeeperAdmin);
 		this.databaseSystem = databaseSystem;
 		this.hasBeenRejected = hasBeenRejected;
 		this.activationKey = activationKey;
+		this.needsApproval = needsApproval;
 	}
 
 	public DatabaseSystem getDatabaseSystem()
@@ -100,11 +103,23 @@ public class UnapprovedUser extends User
 		return this;
 	}
 
+	public boolean isNeedsApproval()
+	{
+		return needsApproval;
+	}
+
+	public UnapprovedUser setNeedsApproval(boolean needsApproval)
+	{
+		this.needsApproval = needsApproval;
+		return this;
+	}
+
 	@GwtIncompatible
 	public static class Parser extends DatabaseObjectParser<UnapprovedUser>
 	{
 		private static final GatekeeperDatabaseObjectCache<Institution>    INSTITUTION_CACHE     = new GatekeeperDatabaseObjectCache<>(Institution.class);
 		private static final GatekeeperDatabaseObjectCache<DatabaseSystem> DATABASE_SYSTEM_CACHE = new GatekeeperDatabaseObjectCache<>(DatabaseSystem.class);
+
 		private Parser()
 		{
 			registerCache(INSTITUTION_CACHE);
@@ -112,7 +127,8 @@ public class UnapprovedUser extends User
 		}
 
 		@Override
-		public UnapprovedUser parse(DatabaseResult row, boolean foreignsFromResultSet) throws DatabaseException
+		public UnapprovedUser parse(DatabaseResult row, boolean foreignsFromResultSet)
+			throws DatabaseException
 		{
 			Long userId = row.getLong(InstitutionManager.ID);
 
@@ -132,13 +148,14 @@ public class UnapprovedUser extends User
 				else
 				{
 					inst = new Institution()
-							.setName(row.getString(INSTITUTION_NAME))
-							.setAcronym(row.getString(INSTITUTION_ACRONYM))
-							.setAddress(row.getString(INSTITUTION_ADDRESS));
+						.setName(row.getString(INSTITUTION_NAME))
+						.setAcronym(row.getString(INSTITUTION_ACRONYM))
+						.setAddress(row.getString(INSTITUTION_ADDRESS));
 				}
 
 				user.setHasBeenRejected(row.getBoolean(HAS_BEEN_REJECTED))
 					.setActivationKey(row.getString(ACTIVATION_KEY))
+					.setNeedsApproval(row.getBoolean(NEEDS_APPROVAL))
 					.setDatabaseSystem(DATABASE_SYSTEM_CACHE.get(row.getLong(DATABASE_SYSTEM_ID), row, foreignsFromResultSet))
 					.setUsername(row.getString(USERNAME))
 					.setFullName(row.getString(FULL_NAME))

@@ -20,7 +20,6 @@ package jhi.gatekeeper.server.service;
 import java.io.*;
 import java.util.*;
 
-import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
@@ -40,7 +39,7 @@ public class GerminateCommunicationServlet extends HttpServlet
 	private static final String GATEKEEPER_ERROR_INVALID_DATA = "GATEKEEPER_ERROR_INVALID_DATA";
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		/* Check parameters */
 		String isNewUserParameter = req.getParameter("isNewUser");
@@ -143,7 +142,7 @@ public class GerminateCommunicationServlet extends HttpServlet
 				return;
 			}
 
-            /* Check if the ids match */
+            // Check if the ids match
 			try
 			{
 				Long userId = Long.parseLong(userIdParameter);
@@ -157,32 +156,15 @@ public class GerminateCommunicationServlet extends HttpServlet
 				return;
 			}
 
-			if (needsApproval)
+			try
 			{
-				try
-				{
-					Email.sendAwaitingApproval(locale, user);
-					Email.sendAdministratorNotification(locale, user);
-				}
-				catch (EmailException e)
-				{
-					e.printStackTrace();
-					resp.sendError(HttpServletResponse.SC_CONFLICT, GATEKEEPER_ERROR_EMAIL);
-				}
+				sendActivationEmail(req, locale, user);
+				resp.setStatus(HttpServletResponse.SC_OK);
 			}
-			else
+			catch (Exception e)
 			{
-				try
-				{
-					sendActivationEmail(req, locale, user);
-					resp.setStatus(HttpServletResponse.SC_OK);
-//					UnapprovedUserManager.delete(user);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-					resp.sendError(HttpServletResponse.SC_CONFLICT, GATEKEEPER_ERROR_EMAIL);
-				}
+				e.printStackTrace();
+				resp.sendError(HttpServletResponse.SC_CONFLICT, GATEKEEPER_ERROR_EMAIL);
 			}
 		}
 		catch (Exception e)

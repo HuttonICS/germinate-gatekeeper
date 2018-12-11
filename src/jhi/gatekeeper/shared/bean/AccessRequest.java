@@ -37,12 +37,14 @@ public class AccessRequest extends DatabaseObject
 	public static final String DATABASE_SYSTEM_ID = "database_system_id";
 	public static final String HAS_BEEN_REJECTED  = "has_been_rejected";
 	public static final String ACTIVATION_KEY     = "activation_key";
+	public static final String NEEDS_APPROVAL     = "needs_approval";
 	public static final String CREATED_ON         = "created_on";
 
 	private User           user;
 	private DatabaseSystem databaseSystem;
 	private boolean        hasBeenRejected;
 	private String         activationKey;
+	private boolean        needsApproval;
 	private Date           createdOn;
 
 	public AccessRequest()
@@ -55,13 +57,14 @@ public class AccessRequest extends DatabaseObject
 		super(id);
 	}
 
-	public AccessRequest(Long id, User user, DatabaseSystem databaseSystem, boolean hasBeenRejected, String activationKey, Date createdOn)
+	public AccessRequest(Long id, User user, DatabaseSystem databaseSystem, boolean hasBeenRejected, String activationKey, boolean needsApproval, Date createdOn)
 	{
 		super(id);
 		this.user = user;
 		this.databaseSystem = databaseSystem;
 		this.hasBeenRejected = hasBeenRejected;
 		this.activationKey = activationKey;
+		this.needsApproval = needsApproval;
 		this.createdOn = createdOn;
 	}
 
@@ -109,6 +112,17 @@ public class AccessRequest extends DatabaseObject
 		return this;
 	}
 
+	public boolean isNeedsApproval()
+	{
+		return needsApproval;
+	}
+
+	public AccessRequest setNeedsApproval(boolean needsApproval)
+	{
+		this.needsApproval = needsApproval;
+		return this;
+	}
+
 	public Date getCreatedOn()
 	{
 		return createdOn;
@@ -124,13 +138,13 @@ public class AccessRequest extends DatabaseObject
 	public String toString()
 	{
 		return "AccessRequest{" +
-				"id=" + id +
-				", user=" + user +
-				", databaseSystem=" + databaseSystem +
-				", hasBeenRejected=" + hasBeenRejected +
-				", activationKey='" + activationKey + '\'' +
-				", createdOn=" + createdOn +
-				'}';
+			"user=" + user +
+			", databaseSystem=" + databaseSystem +
+			", hasBeenRejected=" + hasBeenRejected +
+			", activationKey='" + activationKey + '\'' +
+			", needsApproval=" + needsApproval +
+			", createdOn=" + createdOn +
+			"} " + super.toString();
 	}
 
 	@GwtIncompatible
@@ -138,6 +152,7 @@ public class AccessRequest extends DatabaseObject
 	{
 		private static final GatekeeperDatabaseObjectCache<User>           USER_CACHE            = new GatekeeperDatabaseObjectCache<>(User.class);
 		private static final GatekeeperDatabaseObjectCache<DatabaseSystem> DATABASE_SYSTEM_CACHE = new GatekeeperDatabaseObjectCache<>(DatabaseSystem.class);
+
 		private Parser()
 		{
 			registerCache(USER_CACHE);
@@ -145,7 +160,8 @@ public class AccessRequest extends DatabaseObject
 		}
 
 		@Override
-		public AccessRequest parse(DatabaseResult row, boolean foreignsFromResultSet) throws DatabaseException
+		public AccessRequest parse(DatabaseResult row, boolean foreignsFromResultSet)
+			throws DatabaseException
 		{
 			Long id = row.getLong(ID);
 
@@ -153,11 +169,12 @@ public class AccessRequest extends DatabaseObject
 				return null;
 			else
 				return new AccessRequest(id)
-						.setUser(USER_CACHE.get(row.getLong(USER_ID), row, foreignsFromResultSet))
-						.setDatabaseSystem(DATABASE_SYSTEM_CACHE.get(row.getLong(DATABASE_SYSTEM_ID), row, foreignsFromResultSet))
-						.setHasBeenRejected(row.getBoolean(HAS_BEEN_REJECTED))
-						.setActivationKey(row.getString(ACTIVATION_KEY))
-						.setCreatedOn(row.getTimestamp(CREATED_ON));
+					.setUser(USER_CACHE.get(row.getLong(USER_ID), row, foreignsFromResultSet))
+					.setDatabaseSystem(DATABASE_SYSTEM_CACHE.get(row.getLong(DATABASE_SYSTEM_ID), row, foreignsFromResultSet))
+					.setHasBeenRejected(row.getBoolean(HAS_BEEN_REJECTED))
+					.setActivationKey(row.getString(ACTIVATION_KEY))
+					.setNeedsApproval(row.getBoolean(NEEDS_APPROVAL))
+					.setCreatedOn(row.getTimestamp(CREATED_ON));
 		}
 
 		public static final class Instance

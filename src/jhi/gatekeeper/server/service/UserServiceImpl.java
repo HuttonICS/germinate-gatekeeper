@@ -37,13 +37,15 @@ import jhi.gatekeeper.shared.exception.*;
 public class UserServiceImpl extends AbstractServletImpl implements UserService
 {
 	@Override
-	public void createAdmin(RequestProperties properties, User user, UserCredentials credentials) throws UserExistsException, DatabaseException
+	public void createAdmin(RequestProperties properties, User user, UserCredentials credentials)
+		throws UserExistsException, DatabaseException
 	{
 		UserManager.createAdmin(user, credentials);
 	}
 
 	@Override
-	public long getUserCount(RequestProperties properties, User searchBean) throws InvalidSessionException, InsufficientPermissionsException, DatabaseException
+	public long getUserCount(RequestProperties properties, User searchBean)
+		throws InvalidSessionException, InsufficientPermissionsException, DatabaseException
 	{
 		checkSessionAndPermissions(properties);
 
@@ -51,7 +53,8 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 	}
 
 	@Override
-	public void updateUserEmail(RequestProperties properties, String email) throws InvalidCredentialsException, InvalidSessionException, DatabaseException
+	public void updateUserEmail(RequestProperties properties, String email)
+		throws InvalidCredentialsException, InvalidSessionException, DatabaseException
 	{
 		checkSession(properties);
 
@@ -64,7 +67,8 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 	}
 
 	@Override
-	public void updatePassword(RequestProperties properties, UserCredentials credentials) throws InvalidCredentialsException, InvalidSessionException, DatabaseException, EmailException
+	public void updatePassword(RequestProperties properties, UserCredentials credentials)
+		throws InvalidCredentialsException, InvalidSessionException, DatabaseException, EmailException
 	{
 		checkSession(properties);
 
@@ -76,7 +80,7 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 		UserInternal u = UserManager.getUserByUsernameAndEmail(user.getUsername(), user.getEmailAddress());
 
 		// Check the old password to make sure it's correct!
-		if(!BCrypt.checkpw(credentials.getOldPassword(), u.getPassword()))
+		if (!BCrypt.checkpw(credentials.getOldPassword(), u.getPassword()))
 			throw new InvalidCredentialsException("Invalid password");
 
 		UserManager.updatePassword(UserManager.getUserByUsernameAndEmail(user.getUsername(), user.getEmailAddress()), credentials.getPassword());
@@ -87,7 +91,8 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 	}
 
 	@Override
-	public PaginatedResult<List<User>> getUserList(RequestProperties properties, User searchBean, Pagination pagination) throws InvalidSessionException, InsufficientPermissionsException, DatabaseException
+	public PaginatedResult<List<User>> getUserList(RequestProperties properties, User searchBean, Pagination pagination)
+		throws InvalidSessionException, InsufficientPermissionsException, DatabaseException
 	{
 		checkSessionAndPermissions(properties);
 
@@ -98,7 +103,8 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 	}
 
 	@Override
-	public void deleteUser(RequestProperties properties, long id) throws InvalidSessionException, InsufficientPermissionsException, DatabaseException
+	public void deleteUser(RequestProperties properties, long id)
+		throws InvalidSessionException, InsufficientPermissionsException, DatabaseException
 	{
 		checkSessionAndPermissions(properties);
 
@@ -106,7 +112,8 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 	}
 
 	@Override
-	public void addUser(RequestProperties properties, User user, UserCredentials credentials) throws InvalidSessionException, UserExistsException, InsufficientPermissionsException, DatabaseException
+	public void addUser(RequestProperties properties, User user, UserCredentials credentials)
+		throws InvalidSessionException, UserExistsException, InsufficientPermissionsException, DatabaseException
 	{
 		checkSessionAndPermissions(properties);
 
@@ -115,7 +122,8 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 	}
 
 	@Override
-	public void sendNewPassword(RequestProperties properties, String username, String email) throws InvalidCredentialsException, EmailException, DatabaseException
+	public void sendNewPassword(RequestProperties properties, String username, String email)
+		throws InvalidCredentialsException, EmailException, DatabaseException
 	{
 		UserInternal user = UserManager.getUserByUsernameAndEmail(username, email);
 
@@ -133,15 +141,45 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 	}
 
 	@Override
-	public void activateUser(RequestProperties properties, String key) throws InvalidActivationKeyException, EmailException, DatabaseException, UserNotFoundException, SuspendedUserException
+	public ActivationDecision activateUser(RequestProperties properties, String key)
+		throws InvalidActivationKeyException, EmailException, DatabaseException, UserNotFoundException, SuspendedUserException
 	{
-		User user = UserManager.activateUser(key);
+		UnapprovedUser unapprovedUser = UnapprovedUserManager.getByActivationKey(key);
 
-		Email.sendActivationConfirmation(properties.getLocale(), user);
+		if (unapprovedUser != null)
+		{
+			if (unapprovedUser.isNeedsApproval())
+			{
+				try
+				{
+					Email.sendAwaitingApproval(Locale.ENGLISH, unapprovedUser);
+					Email.sendAdministratorNotification(Locale.ENGLISH, unapprovedUser);
+					return ActivationDecision.AWAITS_APPROVAL;
+				}
+				catch (EmailException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+				User user = UserManager.activateUser(key);
+
+				Email.sendActivationConfirmation(properties.getLocale(), user);
+				return ActivationDecision.GRANTED;
+			}
+		}
+		else
+		{
+			throw new UserNotFoundException();
+		}
+
+		return ActivationDecision.ERROR;
 	}
 
 	@Override
-	public void setHasAccessToGatekeeper(RequestProperties properties, User user) throws InvalidSessionException, InsufficientPermissionsException, DatabaseException
+	public void setHasAccessToGatekeeper(RequestProperties properties, User user)
+		throws InvalidSessionException, InsufficientPermissionsException, DatabaseException
 	{
 		checkSessionAndPermissions(properties);
 
@@ -149,7 +187,8 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 	}
 
 	@Override
-	public User getUser(RequestProperties properties) throws InvalidSessionException, InvalidCredentialsException, DatabaseException
+	public User getUser(RequestProperties properties)
+		throws InvalidSessionException, InvalidCredentialsException, DatabaseException
 	{
 		checkSession(properties);
 

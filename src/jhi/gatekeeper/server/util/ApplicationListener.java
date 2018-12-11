@@ -17,7 +17,14 @@
 
 package jhi.gatekeeper.server.util;
 
+import org.flywaydb.core.*;
+import org.flywaydb.core.api.*;
+
+import java.util.logging.*;
+
 import javax.servlet.*;
+
+import jhi.database.server.*;
 
 public class ApplicationListener implements ServletContextListener
 {
@@ -26,19 +33,23 @@ public class ApplicationListener implements ServletContextListener
 	{
 		PropertyReader.initialize();
 
-//		try
-//		{
-//			Logger.getLogger("").log(Level.INFO, "RUNNING FLYWAY");
-//			Flyway flyway = new Flyway();
-//			flyway.setDataSource(Database.DatabaseType.MYSQL.getConnectionString() + DatabaseUtils.getServerString(), PropertyReader.getProperty(PropertyReader.DATABASE_USERNAME), PropertyReader.getProperty(PropertyReader.DATABASE_PASSWORD));
-//			flyway.setLocations("classpath:jhi.gatekeeper.server.database.migration");
-//			flyway.setBaselineOnMigrate(true);
-//			flyway.migrate();
-//		}
-//		catch (FlywayException e)
-//		{
-//			e.printStackTrace();
-//		}
+		String database = PropertyReader.getProperty(PropertyReader.DATABASE_NAME);
+		try
+		{
+			Logger.getLogger("").log(Level.INFO, "RUNNING FLYWAY on: " + database);
+			Flyway flyway = new Flyway();
+			flyway.setTable("schema_version");
+			flyway.setValidateOnMigrate(false);
+			flyway.setDataSource(Database.DatabaseType.MYSQL.getConnectionString() + DatabaseUtils.getServerString(), PropertyReader.getProperty(PropertyReader.DATABASE_USERNAME), PropertyReader.getProperty(PropertyReader.DATABASE_PASSWORD));
+			flyway.setLocations("classpath:jhi.gatekeeper.server.database.migration");
+			flyway.setBaselineOnMigrate(true);
+			flyway.migrate();
+			flyway.repair();
+		}
+		catch (FlywayException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override

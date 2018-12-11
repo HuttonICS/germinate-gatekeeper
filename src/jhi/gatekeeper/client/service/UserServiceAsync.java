@@ -43,7 +43,7 @@ public interface UserServiceAsync
 
 	void sendNewPassword(RequestProperties properties, String username, String email, AsyncCallback<Void> async);
 
-	void activateUser(RequestProperties properties, String key, AsyncCallback<Void> async);
+	void activateUser(RequestProperties properties, String key, AsyncCallback<ActivationDecision> async);
 
 	void setHasAccessToGatekeeper(RequestProperties properties, User user, AsyncCallback<Void> async);
 

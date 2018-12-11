@@ -66,7 +66,7 @@ public class UnapprovedUserDecisionView extends Composite
 			UnapprovedUserDecisionView.this.setVisible(event.getUnapprovedUser() != null);
 		});
 
-		final AsyncCallbackLogoutOnFailure<Void> callback = new AsyncCallbackLogoutOnFailure<Void>(true)
+		final AsyncCallbackLogoutOnFailure<Void> callback = new AsyncCallbackLogoutOnFailure<Void>()
 		{
 			@Override
 			protected void onSuccessImpl(Void result)

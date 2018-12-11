@@ -27,6 +27,7 @@ import jhi.gatekeeper.client.i18n.*;
 import jhi.gatekeeper.client.service.*;
 import jhi.gatekeeper.client.util.*;
 import jhi.gatekeeper.shared.*;
+import jhi.gatekeeper.shared.bean.*;
 
 /**
  * @author Sebastian Raubach
@@ -45,7 +46,7 @@ public class ActivateUserView extends Composite
 
 		if (!StringUtils.isEmpty(key))
 		{
-			UserService.Instance.getInstance().activateUser(Cookie.getRequestProperties(), key, new AsyncCallback<Void>()
+			UserService.Instance.getInstance().activateUser(Cookie.getRequestProperties(), key, new AsyncCallback<ActivationDecision>()
 			{
 				@Override
 				public void onFailure(Throwable caught)
@@ -54,9 +55,20 @@ public class ActivateUserView extends Composite
 				}
 
 				@Override
-				public void onSuccess(Void result)
+				public void onSuccess(ActivationDecision result)
 				{
-					label.setText(I18n.LANG.activateUserActivationSuccessful());
+					switch (result)
+					{
+						case GRANTED:
+							label.setText(I18n.LANG.activateUserActivationSuccessful());
+							break;
+						case AWAITS_APPROVAL:
+							label.setText(I18n.LANG.activateUserActivationAwaitingApproval());
+							break;
+						case ERROR:
+							label.setText(I18n.LANG.activateUserActivationNotPossible());
+							break;
+					}
 				}
 			});
 		}

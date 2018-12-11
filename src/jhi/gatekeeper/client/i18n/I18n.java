@@ -551,6 +551,14 @@ public interface I18n extends Messages
 	@DefaultMessage("User activation successful. Enjoy your Germinate experience.")
 	String activateUserActivationSuccessful();
 
+	@Key("page.activate.user.label.awaiting.approval")
+	@DefaultMessage("User activation awaiting admin approval. You will be notified via email once a decision has been made.")
+	String activateUserActivationAwaitingApproval();
+
+	@Key("page.activate.user.label.not.possible")
+	@DefaultMessage("User activation currently not possible. Please contact an administrator.")
+	String activateUserActivationNotPossible();
+
 	@Key("page.activate.user.label.invalid.request")
 	@DefaultMessage("The given key is not valid. No user has been activated.")
 	String activateUserInvalidRequest();
