@@ -19,7 +19,6 @@ package jhi.gatekeeper.client.widget;
 
 
 import com.google.gwt.dom.client.*;
-import com.google.gwt.query.client.*;
 import com.google.gwt.user.client.rpc.*;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.*;
@@ -64,38 +63,48 @@ public final class NavigationBar
 		if (enabled)
 		{
 			/* Enable menu items */
-			GQuery.$(menuPanel)
-				  .find("a")
-				  .removeAttr("disabled")
-				  .removeClass(Styles.DISABLED);
+			toggle(menuPanel.getElement(), true);
 		}
 		else
 		{
 			/* Disable menu items */
-			GQuery.$(menuPanel)
-				  .find("a")
-				  .attr("disabled", "true")
-				  .addClass(Styles.DISABLED);
-
-			/* Hide badges */
-			GQuery.$(menuPanel)
-				  .find("span.badge")
-				  .hide();
+			toggle(menuPanel.getElement(), false);
 		}
 	}
 
+	private static native void toggle(Element element, boolean disable) /*-{
+		var sel = $wnd.$(element)
+			.find("a");
+
+		if (disable) {
+			sel.removeAttr("disabled")
+				.removeClass(@org.gwtbootstrap3.client.ui.constants.Styles::DISABLED);
+		} else {
+			sel.attr("disabled", "true")
+				.addClass("disabled");
+
+			$wnd.$(element)
+				.find("span.badge")
+				.hide();
+		}
+
+	}-*/;
+
 	public static void setHighlight(Page page)
 	{
-		GQuery.$(menuPanel)
-			  .find("a")
-			  .removeClass(Styles.ACTIVE);
-
+		css(menuPanel.getElement());
 
 		MenuItem item = menu.getMenuItem(page);
 
 		if (item != null)
 			item.element.addClassName(Styles.ACTIVE);
 	}
+
+	private static native void css(Element element) /*-{
+		$wnd.$(element)
+			.find("a")
+			.removeClass(@org.gwtbootstrap3.client.ui.constants.Styles::ACTIVE);
+	}-*/;
 
 	public static void update()
 	{

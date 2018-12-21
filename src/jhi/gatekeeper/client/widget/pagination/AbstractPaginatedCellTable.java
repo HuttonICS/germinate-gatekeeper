@@ -19,7 +19,6 @@ package jhi.gatekeeper.client.widget.pagination;
 
 import com.google.gwt.core.client.*;
 import com.google.gwt.dom.client.*;
-import com.google.gwt.query.client.*;
 import com.google.gwt.user.cellview.client.*;
 import com.google.gwt.user.client.rpc.*;
 import com.google.gwt.user.client.ui.*;
@@ -44,9 +43,9 @@ public abstract class AbstractPaginatedCellTable<T> extends Composite
 {
 	private static final Integer NR_OF_ITEMS_PER_PAGE = 10;
 
-	protected FlowPanel panel      = new FlowPanel();
+	protected FlowPanel      panel      = new FlowPanel();
 	protected CellTable<T>   cellTable;
-	private   FlowPanel errorPanel = new FlowPanel();
+	private   FlowPanel      errorPanel = new FlowPanel();
 	private   BootstrapPager pager;
 
 	public AbstractPaginatedCellTable()
@@ -165,15 +164,19 @@ public abstract class AbstractPaginatedCellTable<T> extends Composite
 				{
 					for (int i = 0; i < cellTable.getRowCount(); i++)
 					{
-						GQuery.$(cellTable.getRowElement(i))
-							  .find("td")
-							  .css("vertical-align", "middle")
-							  .addClass(Classes.BREAK_WORD);
+						toggle(cellTable.getRowElement(i));
 					}
 				});
 			}
 		});
 	}
+
+	private native void toggle(Element element) /*-{
+		$wnd.$(element)
+			.find("td")
+			.css("vertical-align", "middle")
+			.addClass(@jhi.gatekeeper.client.util.Classes::BREAK_WORD);
+	}-*/;
 
 	protected void addColumn(Column<T, ?> column, String header)
 	{

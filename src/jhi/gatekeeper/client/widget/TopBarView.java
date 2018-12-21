@@ -21,7 +21,6 @@ import com.google.gwt.core.client.*;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.i18n.client.*;
-import com.google.gwt.query.client.*;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.*;
 
@@ -37,11 +36,11 @@ import jhi.gatekeeper.shared.*;
 public class TopBarView
 {
 	private static TopBarViewUiBinder ourUiBinder = GWT.create(TopBarViewUiBinder.class);
-	private final UListElement rootElement;
+	private final  UListElement       rootElement;
 	@UiField
-	LIElement languageDropdown;
+	LIElement     languageDropdown;
 	@UiField
-	UListElement languageList;
+	UListElement  languageList;
 	@UiField
 	AnchorElement aboutAnchor;
 	@UiField
@@ -60,31 +59,31 @@ public class TopBarView
 		loginAnchor.setHref("#" + Page.login.getUrl());
 		logoutAnchor.setHref("#" + Page.logout.getUrl());
 
-		GQuery.$(logoutAnchor).hide();
+		JsQuery.hide(logoutAnchor);
 
 		GatekeeperEventBus.BUS.addHandler(LoginEvent.TYPE, event ->
 		{
-			GQuery.$(logoutAnchor).show();
-			GQuery.$(loginAnchor).hide();
-			GQuery.$(lostPasswordAnchor).hide();
+			JsQuery.show(logoutAnchor);
+			JsQuery.hide(loginAnchor);
+			JsQuery.hide(lostPasswordAnchor);
 		});
 		GatekeeperEventBus.BUS.addHandler(LogoutEvent.TYPE, event ->
 		{
-			GQuery.$(logoutAnchor).hide();
-			GQuery.$(loginAnchor).show();
-			GQuery.$(lostPasswordAnchor).show();
+			JsQuery.hide(logoutAnchor);
+			JsQuery.show(loginAnchor);
+			JsQuery.show(lostPasswordAnchor);
 		});
 
 		/* Get all the supported locales */
 		final List<String> locales = new ArrayList<>(Arrays.asList(LocaleInfo.getAvailableLocaleNames()));
 
-        /* Remove the default locale, since it's equal to en_GB */
+		/* Remove the default locale, since it's equal to en_GB */
 		locales.remove("default");
 
-        /* Sort the remaining locales */
+		/* Sort the remaining locales */
 		Collections.sort(locales);
 
-        /* Get the currently active locale */
+		/* Get the currently active locale */
 		String currentLocale = LocaleInfo.getCurrentLocale().getLocaleName();
 
 		boolean additionalLanguages = false;

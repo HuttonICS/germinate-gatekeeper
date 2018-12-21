@@ -31,7 +31,6 @@
 
 	<!-- Other module inherits -->
 	<inherits name="org.gwtbootstrap3.GwtBootstrap3NoTheme"/> <!-- Bootstrap for GWT -->
-	<inherits name="com.google.gwt.query.Query"/> <!-- gQuery (jQuery for GWT) -->
 	<inherits name="jhi.database.JHIDatabaseCommons"/> <!-- JHI specific database module -->
 
 	<!-- Specify the app entry point class -->

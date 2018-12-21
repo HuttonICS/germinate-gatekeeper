@@ -150,22 +150,21 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 		{
 			if (unapprovedUser.isNeedsApproval())
 			{
-				try
-				{
-					Email.sendAwaitingApproval(Locale.ENGLISH, unapprovedUser);
-					Email.sendAdministratorNotification(Locale.ENGLISH, unapprovedUser);
-					return ActivationDecision.AWAITS_APPROVAL;
-				}
-				catch (EmailException e)
-				{
-					e.printStackTrace();
-				}
+				Email.sendAwaitingApproval(Locale.ENGLISH, unapprovedUser);
+				Email.sendAdministratorNotification(Locale.ENGLISH, unapprovedUser);
+
+				// Remove the activation key
+				UnapprovedUserManager.setActivationKey(unapprovedUser, null);
+				return ActivationDecision.AWAITS_APPROVAL;
 			}
 			else
 			{
 				User user = UserManager.activateUser(key);
 
 				Email.sendActivationConfirmation(properties.getLocale(), user);
+
+				// Remove the activation key
+				UnapprovedUserManager.setActivationKey(unapprovedUser, null);
 				return ActivationDecision.GRANTED;
 			}
 		}
@@ -173,8 +172,6 @@ public class UserServiceImpl extends AbstractServletImpl implements UserService
 		{
 			throw new UserNotFoundException();
 		}
-
-		return ActivationDecision.ERROR;
 	}
 
 	@Override

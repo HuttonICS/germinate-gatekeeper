@@ -19,7 +19,6 @@ package jhi.gatekeeper.client.util;
 
 
 import com.google.gwt.dom.client.*;
-import com.google.gwt.query.client.*;
 import com.google.gwt.user.client.*;
 import com.google.gwt.user.client.ui.*;
 
@@ -43,7 +42,7 @@ import jhi.gatekeeper.shared.*;
  */
 public class ContentHolder
 {
-	private Panel contentPanel;
+	private Panel     contentPanel;
 	private Set<Page> availablePages = new HashSet<>();
 
 	private ContentHolder()
@@ -120,11 +119,9 @@ public class ContentHolder
 		{
 			if (newContent instanceof LoginPage || newContent instanceof CreateAdminPage)
 			{
-				GQuery.$("#" + Ids.DIV_SIDEBAR)
-					  .hide();
-				GQuery.$("#" + Ids.DIV_CONTENT)
-					  .removeClass(ColumnSize.MD_9.getCssName())
-					  .addClass(ColumnSize.MD_12.getCssName());
+				JsQuery.hide("#" + Ids.DIV_SIDEBAR);
+				JsQuery.removeClass("#" + Ids.DIV_CONTENT, ColumnSize.MD_9.getCssName());
+				JsQuery.addClass("#" + Ids.DIV_CONTENT, ColumnSize.MD_12.getCssName());
 
 				Cookie.removeAll();
 				availablePages.clear();
@@ -144,11 +141,9 @@ public class ContentHolder
 		}
 		else
 		{
-			GQuery.$("#" + Ids.DIV_SIDEBAR)
-				  .show();
-			GQuery.$("#" + Ids.DIV_CONTENT)
-				  .removeClass(ColumnSize.MD_12.getCssName())
-				  .addClass(ColumnSize.MD_9.getCssName());
+			JsQuery.show("#" + Ids.DIV_SIDEBAR);
+			JsQuery.removeClass("#" + Ids.DIV_CONTENT, ColumnSize.MD_12.getCssName());
+			JsQuery.addClass("#" + Ids.DIV_CONTENT, ColumnSize.MD_9.getCssName());
 
 			if (!availablePages.contains(page))
 			{
