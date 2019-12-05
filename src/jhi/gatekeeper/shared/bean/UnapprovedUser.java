@@ -162,8 +162,7 @@ public class UnapprovedUser extends User
 					.setEmail(row.getString(EMAIL_ADDRESS))
 					.setCreationDate(row.getTimestamp(CREATED_ON))
 					.setInstitution(inst)
-					.setHasAccessToGatekeeper(false)
-					.setInstitution(inst);
+					.setHasAccessToGatekeeper(false);
 
 				return user;
 			}

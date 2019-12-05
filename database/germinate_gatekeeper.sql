@@ -54,7 +54,7 @@ CREATE TABLE `database_systems` (
 -- ----------------------------
 -- Records of database_systems
 -- ----------------------------
-INSERT INTO `database_systems` VALUES ('1', 'gatekeeper', '--', 'Gatekeeper Database');
+INSERT INTO `database_systems` VALUES ('-1', 'gatekeeper', '--', 'Gatekeeper Database');
 
 -- ----------------------------
 -- Table structure for institutions
