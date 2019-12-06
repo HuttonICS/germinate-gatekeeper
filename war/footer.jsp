@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
 
 <%--
@@ -26,7 +26,7 @@
 
 	String yearString = "2013-" + year;
 
-	String versionName = "3.5.0";
+	String versionName = "3.6.0";
 %>
 
 <footer class="footer">
