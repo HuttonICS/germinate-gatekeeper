@@ -34,9 +34,9 @@ public class UnapprovedUserManager extends AbstractManager
 {
 	private static final String SELECT_BY_ID = "SELECT * FROM unapproved_users WHERE id = ?";
 
-	private static final String QUERY_COUNT             = "SELECT COUNT(1) AS count FROM unapproved_users WHERE has_been_rejected = 0 AND ISNULL(activation_key)";
+	private static final String QUERY_COUNT             = "SELECT COUNT(1) AS count FROM unapproved_users WHERE has_been_rejected = 0 AND needs_approval = 1";
 	private static final String QUERY_PASSWORD          = "SELECT user_password FROM unapproved_users WHERE id = ?";
-	private static final String QUERY_LIST_DATA         = "SELECT * FROM unapproved_users WHERE has_been_rejected = 0 AND ISNULL(activation_key) ORDER BY created_on ASC LIMIT ?, ?";
+	private static final String QUERY_LIST_DATA         = "SELECT * FROM unapproved_users WHERE has_been_rejected = 0 AND needs_approval = 1 ORDER BY created_on ASC LIMIT ?, ?";
 	private static final String QUERY_BY_ACTIVATION_KEY = "SELECT * FROM unapproved_users WHERE activation_key = ?";
 
 	private static final String UPDATE_ACTIVATION_KEY = "UPDATE unapproved_users SET activation_key = ? WHERE id = ?";

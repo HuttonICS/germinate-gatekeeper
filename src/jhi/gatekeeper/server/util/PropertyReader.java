@@ -123,7 +123,7 @@ public class PropertyReader
 
 		GatekeeperException.printExceptions = PropertyReader.getPropertyBoolean(GATEKEEPER_SERVER_LOGGING_ENABLED, false);
 
-		Database.init(DatabaseUtils.getServerString(), getProperty(DATABASE_USERNAME), getProperty(DATABASE_PASSWORD));
+		Database.init(DatabaseUtils.getServerString(), getProperty(DATABASE_USERNAME), getProperty(DATABASE_PASSWORD, ""));
 		DatabaseException.setForwardExceptionContent(false);
 		DatabaseException.setPrintExceptions(true);
 	}
@@ -152,8 +152,6 @@ public class PropertyReader
 			throwException(DATABASE_NAME);
 		if (StringUtils.isEmpty(getProperty(DATABASE_USERNAME)))
 			throwException(DATABASE_USERNAME);
-		if (StringUtils.isEmpty(getProperty(DATABASE_PASSWORD)))
-			throwException(DATABASE_PASSWORD);
 		if (databaseUsePort && StringUtils.isEmpty(databasePort))
 			throwException(DATABASE_PORT);
 	}
@@ -177,6 +175,22 @@ public class PropertyReader
 	public static String getProperty(String propertyName)
 	{
 		return properties.getProperty(propertyName);
+	}
+
+	/**
+	 * Reads a property from the .properties file
+	 *
+	 * @param propertyName The property to read
+	 * @return The property or <code>null</code> if the property is not found
+	 */
+	public static String getProperty(String propertyName, String fallback)
+	{
+		String result = properties.getProperty(propertyName);
+
+		if (result == null)
+			result = fallback;
+
+		return result;
 	}
 
 	/**
