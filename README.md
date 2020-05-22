@@ -1,3 +1,5 @@
+# This version of Gatekeeper is no longer maintained. Please use the [new Gatekeeper](https://github.com/germinateplatform/gatekeeper-vue) instead.
+
 # Germinate Gatekeeper
 Gatekeeper acts as an authentication mechanism for the Germinate system and allows restricted access to Germinate databases. 
 
